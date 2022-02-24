@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import app from '../services/firebase';
 
 const Signup = function () {
   const emailRef = useRef();
@@ -7,15 +9,18 @@ const Signup = function () {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { signup } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(app);
 
     try {
       setError('');
       setLoading(true);
 
       await signup(emailRef.current.value, passwordRef.current.value);
+      navigate('/');
     } catch (err) {
       console.log(err);
       setError('Failed to Signup');
@@ -53,6 +58,9 @@ const Signup = function () {
             </button>
           </div>
         </form>
+        <div className="form__login-link">
+          Already have an account? <Link to="/login">Log in</Link>
+        </div>
       </div>
     </div>
   );

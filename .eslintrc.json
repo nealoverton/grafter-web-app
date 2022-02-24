@@ -28,6 +28,7 @@
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/prop-types": ["off"]
+    "react/prop-types": ["off"],
+    "react/jsx-no-constructed-context-values": ["off"]
   }
 }
