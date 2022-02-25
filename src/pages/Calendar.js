@@ -8,7 +8,7 @@ const ReactCalendar = function () {
     setDate(date);
   };
   const addEvent = (value) => {
-    console.log('clicked day: ', value);
+    console.log('clicked day:', value);
   };
   return (
     <div>
