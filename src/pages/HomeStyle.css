@@ -57,13 +57,13 @@
   color: var(--color-grey-light-1);
 }
 
-.button-66:hover {
+.JobsButton:hover {
   background-color: #065dd8;
   transform: translateY(-2px);
 }
 
 @media (min-width: 768px) {
-  .button-66 {
+  .JobsButton {
     padding: 16px 44px;
     min-width: 150px;
   }
@@ -98,13 +98,13 @@
   color: var(--color-grey-light-1);
 }
 
-.button-66:hover {
+.calendar:hover {
   background-color: #065dd8;
   transform: translateY(-2px);
 }
 
 @media (min-width: 768px) {
-  .button-66 {
+  .calendar {
     padding: 16px 44px;
     min-width: 150px;
   }
@@ -138,13 +138,13 @@
   color: var(--color-grey-light-1);
 }
 
-.button-66:hover {
+.sketch:hover {
   background-color: #065dd8;
   transform: translateY(-2px);
 }
 
 @media (min-width: 768px) {
-  .button-66 {
+  .sketch {
     padding: 16px 44px;
     min-width: 150px;
   }
