@@ -1,0 +1,12 @@
+Nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.Nav__logo {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 30px;
+}

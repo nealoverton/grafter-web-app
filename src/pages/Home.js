@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import Nav from '../components/layout/Navbar';
 
 const Home = function () {
   const [error, setError] = useState('');
@@ -22,6 +23,7 @@ const Home = function () {
 
   return (
     <div className="container">
+      <Nav />
       <h1>HI {currentUser && currentUser.email}</h1>
       <button type="button" onClick={handleLogout}>
         Log out
