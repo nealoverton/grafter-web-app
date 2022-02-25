@@ -1,15 +1,17 @@
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import React, { useState } from 'react';
+import './CalendarStyle.css';
 
-function Diary() {
-  const [value, onChange] = useState(new Date());
-
+const ReactCalendar = function () {
+  const [dates, setDate] = useState(new Date());
+  const onChange = (date) => {
+    setDate(date);
+  };
   return (
     <div>
-      <Calendar onChange={onChange} value={value} />
+      <Calendar onChange={onChange} value={dates} />
     </div>
   );
-}
+};
 
-export default Diary;
+export default ReactCalendar;
