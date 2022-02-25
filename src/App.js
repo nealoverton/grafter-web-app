@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import JobsList from './pages/JobsListPage';
 import Nav from './components/layout/Navbar';
 import { AuthProvider } from './contexts/AuthContext';
+import MaterialsList from './pages/MaterialsList';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/jobs" element={<JobsList />} />
+          <Route path="/materials" element={<MaterialsList />} />
         </Routes>
       </AuthProvider>
     </Router>
