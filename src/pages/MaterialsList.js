@@ -1,9 +1,3 @@
-// Form input
-// Material name
-// Unit
-// Price
-
-// [{name: wood, unit: 3, price: 20.99}]
 // calculation
 // components
 // styling
@@ -18,6 +12,10 @@ const MaterialsList = function () {
   const [materialName, setMaterialName] = useState('');
   const [unit, setUnit] = useState('');
   const [price, setPrice] = useState('');
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  // Placeholder for calculator
+  const materials = [{ price: '4.70' }, { price: '8.67' }, { price: '2.05' }];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +24,14 @@ const MaterialsList = function () {
     console.log(materialList);
     // Make POST request to firebase
   };
+
+  let count = 0;
+
+  // eslint-disable-next-line no-unused-vars
+  const calculatePrice = materials.forEach((material) => {
+    const convertToNum = Number(material.price);
+    count += convertToNum;
+  });
 
   return (
     <div className="conatiner__MaterialsList">
@@ -37,7 +43,14 @@ const MaterialsList = function () {
         <p>{price}</p>
       </div>
 
-      <div className="materialsListForm">
+      <div className="calculator__materialsList">
+        <p>{`£${totalPrice}`}</p>
+        <button type="submit" onClick={() => setTotalPrice(count.toFixed(2))}>
+          Total
+        </button>
+      </div>
+
+      <div className="form__materialsList">
         <h2>Add new Materials</h2>
         <form onSubmit={handleSubmit}>
           <input
