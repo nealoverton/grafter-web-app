@@ -6,37 +6,39 @@
 // BEM
 // classNames
 
-// materials in one row
 // Only submit after
 // Removing materials
-// Create array of test objects
 
 import { useState } from 'react';
 import './MaterialList.css';
 
 const MaterialsList = function () {
+  // eslint-disable-next-line no-unused-vars
   const [materialName, setMaterialName] = useState('');
   const [unit, setUnit] = useState('');
   const [price, setPrice] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
-
-  // Placeholder materials data
-  const materials = [
+  const [materials, setMaterials] = useState([
     { materialName: 'wood', unit: '3', price: '2.00' },
     { materialName: 'metal', unit: '1', price: '1.00' },
     { materialName: 'stone', unit: '5', price: '3.00' }
-  ];
+  ]);
+
+  // Placeholder materials data
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const materialList = { materialName, unit, price };
+    setMaterials([materialList, ...materials]);
+    setMaterialName('');
+    setUnit('');
+    setPrice('');
 
-    console.log(materialList);
     // Make POST request to firebase
   };
 
   if (materials.length === 0) {
-    return <p>Please add item to the material list</p>;
+    return <p>Please add item to the materials list</p>;
   }
 
   let count = 0;
