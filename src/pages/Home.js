@@ -32,8 +32,8 @@ const Home = function () {
           <button type="button">Jobs</button>
         </Link>
         <button type="button">Sketch</button>
-        <Link to="/diary">
-          <button type="button">Diary</button>
+        <Link to="/calendar">
+          <button type="button">Calendar</button>
         </Link>
       </div>
     </div>
