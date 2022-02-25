@@ -1,0 +1,33 @@
+/* * {
+  border: solid 1px red;
+} */
+
+ul {
+  list-style: none;
+}
+
+.container__MaterialsList {
+  width: 90%;
+  margin: 1rem auto;
+  max-width: 1000px;
+  background-color: #faf9f9;
+}
+
+.formBox__materialsList {
+  padding: 0.5rem 0;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  width: 90%;
+}
+
+.form__container__materialsList {
+  font-size: 1.2rem;
+  margin-top: 5%;
+}
+
+.btn__materialList {
+  margin: 1rem;
+}
