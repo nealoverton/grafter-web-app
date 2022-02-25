@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Nav from '../components/layout/Navbar';
 
@@ -28,6 +29,15 @@ const Home = function () {
         Log out
       </button>
       {error && <h1>{error}</h1>}
+      <div className="homePage__buttons">
+        <Link to="/jobs">
+          <button type="button">Jobs</button>
+        </Link>
+        <button type="button">Sketch</button>
+        <Link to="/calendar">
+          <button type="button">Calendar</button>
+        </Link>
+      </div>
     </div>
   );
 };
