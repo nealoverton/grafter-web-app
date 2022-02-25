@@ -31,3 +31,24 @@ ul {
 .btn__materialList {
   margin: 1rem;
 }
+
+.itemList__materialList {
+  display: inline-block;
+  font-size: 1.5em;
+}
+
+.deleteBtn__materialList {
+  margin-left: 10%;
+}
+
+.itemListContainer__materialList {
+  padding: 5px;
+}
+
+.calculator__materialsList {
+  padding: 5%;
+}
+
+.calculator__materialsList p {
+  font-size: 2em;
+}

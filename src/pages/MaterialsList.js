@@ -57,9 +57,14 @@ const MaterialsList = function () {
         {/* materials state, iterate through that the return price etc */}
         {/* check if someone is 0 if 0 put basic field in there, otherwise pop with mat */}
         {materials.map((item) => (
-          <li>
-            {item.materialName}, {item.unit}, {item.price}
-          </li>
+          <div className="itemListContainer__materialList">
+            <li className="itemList__materialList">
+              {item.materialName}, {item.unit}, {item.price}
+            </li>
+            <button type="submit" className="deleteBtn__materialList">
+              ❌{/* Make delete request using firebase */}
+            </button>
+          </div>
         ))}
       </ul>
 
