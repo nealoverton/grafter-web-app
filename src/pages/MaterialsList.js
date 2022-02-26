@@ -29,7 +29,7 @@ const MaterialsList = function () {
   const handleSubmit = (e) => {
     e.preventDefault();
     const materialList = { materialName, unit, price };
-    setMaterials([materialList, ...materials]);
+    setMaterials([...materials, materialList]);
     setMaterialName('');
     setUnit('');
     setPrice('');
@@ -62,7 +62,7 @@ const MaterialsList = function () {
               {item.materialName}, {item.unit}, {item.price}
             </li>
             <button type="submit" className="deleteBtn__materialList">
-              ❌{/* Make delete request using firebase */}
+              ❌{/* Make delete request to firebase */}
             </button>
           </div>
         ))}
