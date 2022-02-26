@@ -10,6 +10,8 @@
 // Removing materials
 
 import { useState } from 'react';
+import EditableRow from '../components/forms/EditableRow';
+import ReadOnlyRow from '../components/forms/ReadOnlyRow';
 import './MaterialList.css';
 
 const MaterialsList = function () {
@@ -53,20 +55,29 @@ const MaterialsList = function () {
     <div className="container__MaterialsList">
       <h1>Materials List</h1>
       <h2>Job placeholder</h2>
-      <ul className="jobMaterialList">
-        {/* materials state, iterate through that the return price etc */}
-        {/* check if someone is 0 if 0 put basic field in there, otherwise pop with mat */}
-        {materials.map((item) => (
-          <div className="itemListContainer__materialList">
-            <li className="itemList__materialList">
-              {item.materialName}, {item.unit}, {item.price}
-            </li>
-            <button type="submit" className="deleteBtn__materialList">
-              ❌{/* Make delete request to firebase */}
-            </button>
-          </div>
-        ))}
-      </ul>
+      {/* materials state, iterate through that the return price etc */}
+      {/* check if someone is 0 if 0 put basic field in there, otherwise pop with mat */}
+      <div className="table__materialsList">
+        <form>
+          <table>
+            <thead>
+              <tr>
+                <th>Material</th>
+                <th>Units</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {materials.map((item) => (
+                <>
+                  <EditableRow />
+                  <ReadOnlyRow item={item} />
+                </>
+              ))}
+            </tbody>
+          </table>
+        </form>
+      </div>
 
       <div className="calculator__materialsList">
         <p>{`£${totalPrice}`}</p>
