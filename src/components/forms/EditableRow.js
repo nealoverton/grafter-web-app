@@ -1,8 +1,8 @@
 const EditableRow = function ({ editFormData, handleEditFormChange }) {
-  console.log(editFormData, '<<<formData');
-  console.log(handleEditFormChange, '<<<edit func');
+  //   console.log(editFormData, '<<<formData');
+  //   console.log(handleEditFormChange, '<<<edit func');
 
-  console.log(editFormData.materialName, '<<<formData name');
+  //   console.log(editFormData.materialName, '<<<formData name');
 
   return (
     <tr>
@@ -10,7 +10,7 @@ const EditableRow = function ({ editFormData, handleEditFormChange }) {
         <input
           type="text"
           required
-          placeholder="Enter material..."
+          placeholder="Enter a material..."
           name="materialName"
           value={editFormData.materialName}
           onChange={handleEditFormChange}
@@ -20,7 +20,7 @@ const EditableRow = function ({ editFormData, handleEditFormChange }) {
         <input
           type="text"
           required
-          placeholder="Enter unit..."
+          placeholder="Enter a unit..."
           name="unit"
           value={editFormData.unit}
           onChange={handleEditFormChange}
@@ -30,7 +30,7 @@ const EditableRow = function ({ editFormData, handleEditFormChange }) {
         <input
           type="text"
           required
-          placeholder="Enter price..."
+          placeholder="Enter a price..."
           name="price"
           value={editFormData.price}
           onChange={handleEditFormChange}

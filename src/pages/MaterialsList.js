@@ -91,6 +91,7 @@ const MaterialsList = function () {
   });
 
   const handleEditClick = (e, material) => {
+    console.log(material, '<<<');
     e.preventDefault();
     setEditMaterialId(material.id);
 
