@@ -21,10 +21,17 @@ const MaterialsList = function () {
   const [price, setPrice] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
   const [materials, setMaterials] = useState([
-    { materialName: 'wood', unit: '3', price: '2.00' },
-    { materialName: 'metal', unit: '1', price: '1.00' },
-    { materialName: 'stone', unit: '5', price: '3.00' }
+    { materialName: 'wood', unit: '3', price: '2.00', id: 1 },
+    { materialName: 'metal', unit: '1', price: '1.00', id: 2 },
+    { materialName: 'stone', unit: '5', price: '3.00', id: 3 }
   ]);
+
+  const [editMaterialId, setEditMaterialId] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+    materialName: '',
+    unit: '',
+    price: ''
+  });
 
   // Placeholder materials data
 
@@ -39,6 +46,38 @@ const MaterialsList = function () {
     // Make POST request to firebase
   };
 
+  const handleEditFormChange = (e) => {
+    e.preventDefault();
+
+    const fieldName = e.target.getAttribute('materialName');
+    const fieldValue = e.target.value;
+
+    const newFormdata = { ...editFormData };
+    newFormdata[fieldName] = fieldValue;
+
+    setEditFormData(newFormdata);
+  };
+
+  const handleEditFormSubmit = (e) => {
+    e.preventDefault();
+
+    const editedMaterial = {
+      materialName: editFormData.materialName,
+      unit: editFormData.unit,
+      price: editFormData.price,
+      id: editMaterialId
+    };
+
+    const newMaterials = [...materials];
+
+    const index = materials.findIndex((material) => material.id === editMaterialId);
+
+    newMaterials[index] = editedMaterial;
+
+    setMaterials(newMaterials);
+    setEditMaterialId(null);
+  };
+
   if (materials.length === 0) {
     return <p>Please add item to the materials list</p>;
   }
@@ -51,6 +90,19 @@ const MaterialsList = function () {
     count += convertToNum;
   });
 
+  const handleEditClick = (e, material) => {
+    e.preventDefault();
+    setEditMaterialId(material.id);
+
+    const formValues = {
+      materialName: material.materialName,
+      unit: material.unit,
+      price: material.price
+    };
+    setEditFormData(formValues);
+    console.log(editFormData);
+  };
+
   return (
     <div className="container__MaterialsList">
       <h1>Materials List</h1>
@@ -58,22 +110,27 @@ const MaterialsList = function () {
       {/* materials state, iterate through that the return price etc */}
       {/* check if someone is 0 if 0 put basic field in there, otherwise pop with mat */}
       <div className="table__materialsList">
-        <form>
+        <form onSubmit={handleEditFormSubmit}>
           <table>
             <thead>
               <tr>
                 <th>Material</th>
                 <th>Units</th>
                 <th>Price</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {materials.map((item) => (
-                <>
-                  <EditableRow />
-                  <ReadOnlyRow item={item} />
-                </>
-              ))}
+              {materials.map((item) =>
+                editMaterialId === item.id ? (
+                  <EditableRow
+                    editFormData={editFormData}
+                    handleEditFormChange={handleEditFormChange}
+                  />
+                ) : (
+                  <ReadOnlyRow item={item} handleEditClick={handleEditClick} />
+                )
+              )}
             </tbody>
           </table>
         </form>
