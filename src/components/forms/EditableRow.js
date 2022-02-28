@@ -9,6 +9,7 @@ const EditableRow = function ({ editFormData, handleEditFormChange, handleCancel
           name="materialName"
           value={editFormData.materialName}
           onChange={handleEditFormChange}
+          className="tableInput__materialList"
         />
       </td>
       <td>
@@ -19,6 +20,7 @@ const EditableRow = function ({ editFormData, handleEditFormChange, handleCancel
           name="unit"
           value={editFormData.unit}
           onChange={handleEditFormChange}
+          className="tableInput__materialList"
         />
       </td>
       <td>
@@ -28,12 +30,19 @@ const EditableRow = function ({ editFormData, handleEditFormChange, handleCancel
           placeholder="Enter a price..."
           name="price"
           value={editFormData.price}
+          className="tableInput__materialList"
           onChange={handleEditFormChange}
         />
       </td>
       <td>
-        <button type="submit">Save</button>
-        <button type="button" onClick={handleCancelClick}>
+        <button type="submit" className="actionBtn__materialList btnSmall">
+          Save
+        </button>
+        <button
+          type="button"
+          onClick={handleCancelClick}
+          className="actionBtn__materialList btnSmall"
+        >
           Cancel
         </button>
       </td>

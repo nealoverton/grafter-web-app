@@ -8,14 +8,14 @@ const ReadOnlyRow = function ({ item, handleEditClick, handleDeleteClick }) {
         <button
           type="button"
           onClick={(e) => handleEditClick(e, item)}
-          className="actionBtn__materialList"
+          className="actionBtn__materialList btnSmall"
         >
           Edit{' '}
         </button>
         <button
           type="button"
           onClick={() => handleDeleteClick(item.id)}
-          className="actionBtn__materialList"
+          className="actionBtn__materialList btnSmall"
         >
           Delete
         </button>

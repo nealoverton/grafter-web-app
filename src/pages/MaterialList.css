@@ -82,6 +82,7 @@ ul {
   background-color: var(--color-primary-blue-dark);
   color: var(--color-grey-light-1);
   margin-top: 10%;
+  margin-bottom: 15%;
 }
 
 h1 {
@@ -132,4 +133,15 @@ td {
   text-decoration: none;
   background-color: var(--color-primary-blue-dark);
   color: var(--color-grey-light-1);
+}
+.btnSmall {
+  min-width: 60px;
+  min-height: 10px;
+  padding: 5px;
+  margin: 4px;
+}
+
+.tableInput__materialList {
+  font-size: 1em;
+  max-width: 55px;
 }
