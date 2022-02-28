@@ -48,6 +48,10 @@ const Job = function () {
     func(event.target.value);
   };
 
+  const handleFile = () => {
+    //send file to db then request job with new url added to attachements
+  };
+
   const updateJob = () => {
     const tempJob = job;
     tempJob.title = title;
@@ -95,9 +99,15 @@ const Job = function () {
 
       <MaterialsList />
 
-      <div className="Job__attachment-icons__row">
+      <div className="Job__attachment-buttons__row">
         <FaCamera className="Job__attachment-icons" />
-        <FaImage className="Job__attachment-icons" />
+
+        <div>
+          <label onChange={handleFile} htmlFor="formId">
+            <input name="" type="file" id="formId" hidden />
+            <FaImage className="Job__attachment-icons" />
+          </label>
+        </div>
       </div>
 
       <ul className="Job__attachments">
