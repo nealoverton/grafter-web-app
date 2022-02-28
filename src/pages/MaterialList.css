@@ -10,7 +10,7 @@ ul {
   width: 90%;
   margin: 1rem auto;
   max-width: 1000px;
-  background-color: #faf9f9;
+  background-color: var(--color-grey-light-1);
 }
 
 .formBox__materialsList {
@@ -51,4 +51,97 @@ ul {
 
 .calculator__materialsList p {
   font-size: 2em;
+}
+
+.button__materialList {
+  background-color: #0a6bff;
+  border-radius: 4px;
+  border: 0;
+  box-shadow: rgba(1, 60, 136, 0.5) 0 -1px 3px 0 inset, rgba(0, 44, 97, 0.1) 0 3px 6px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inherit;
+  font-family: 'Space Grotesk', -apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  margin: 0;
+  min-height: 56px;
+  min-width: 120px;
+  padding: 16px 20px;
+  position: relative;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  transition: all 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+  text-decoration: none;
+  background-color: var(--color-primary-blue-dark);
+  color: var(--color-grey-light-1);
+  margin-top: 10%;
+  margin-bottom: 15%;
+}
+
+h1 {
+  font-size: 3.5em;
+}
+
+h2 {
+  font-size: 2em;
+  margin: 5% 5%;
+}
+
+th,
+td {
+  font-size: 1.5em;
+  padding: 3%;
+}
+
+.totalPrice__materialList {
+  margin-left: 10%;
+  margin-bottom: 8%;
+}
+
+.actionBtn__materialList {
+  background-color: #0a6bff;
+  border-radius: 4px;
+  border: 0;
+  box-shadow: rgba(1, 60, 136, 0.5) 0 -1px 3px 0 inset, rgba(0, 44, 97, 0.1) 0 3px 6px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inherit;
+  font-family: 'Space Grotesk', -apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 24px;
+  margin: 0;
+  min-height: 56px;
+  min-width: 120px;
+  padding: 16px 20px;
+  position: relative;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  transition: all 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+  text-decoration: none;
+  background-color: var(--color-primary-blue-dark);
+  color: var(--color-grey-light-1);
+}
+.btnSmall {
+  min-width: 60px;
+  min-height: 10px;
+  padding: 5px;
+  margin: 4px;
+}
+
+.tableInput__materialList {
+  font-size: 1em;
+  max-width: 55px;
 }

@@ -155,8 +155,12 @@ const MaterialsList = function () {
       </div>
 
       <div className="calculator__materialsList">
-        <p>{`£${totalPrice}`}</p>
-        <button type="submit" onClick={() => setTotalPrice(count.toFixed(2))}>
+        <p className="totalPrice__materialList">{`£${totalPrice}`}</p>
+        <button
+          type="submit"
+          onClick={() => setTotalPrice(count.toFixed(2))}
+          className="button__materialList"
+        >
           Total
         </button>
       </div>
@@ -189,7 +193,9 @@ const MaterialsList = function () {
             onChange={(e) => setPrice(e.target.value)}
           />
           <div className="btn__materialList">
-            <button type="submit">Add Item</button>
+            <button type="submit" className="button__materialList">
+              Add Item
+            </button>
           </div>
         </form>
       </div>
