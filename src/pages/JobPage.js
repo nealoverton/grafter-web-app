@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { TiEdit } from 'react-icons/ti';
 
-function JobPage({ jobs, completeJob }) {
+function JobPage({ jobs, completeJob, removeJob }) {
   const [edit, setEdit] = useState({
     id: null,
     value: ''
@@ -14,8 +14,8 @@ function JobPage({ jobs, completeJob }) {
         {job.text}
       </div>
       <div className="icons">
-        <RiCloseCircleLine />
-        <TiEdit />
+        <RiCloseCircleLine onClick={() => removeJob(job.id)} className="delete-icon" />
+        <TiEdit onClick={() => setEdit({ id: job.id, value: job.text })} className="edit-icon" />
       </div>
     </div>
   ));

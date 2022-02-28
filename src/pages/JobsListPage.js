@@ -14,7 +14,12 @@ function JobsList() {
     const newJobs = [job, ...jobs];
 
     setJobs(newJobs);
-    console.log(...jobs);
+  };
+
+  const removeJob = (id) => {
+    const removeArr = [...jobs].filter((job) => job.id !== id);
+
+    setJobs(removeArr);
   };
 
   const completeJob = (id) => {
@@ -31,7 +36,7 @@ function JobsList() {
     <div className="jobs-list">
       <h1>What jobs do you have today?</h1>
       <JobForm onSubmit={addJob} />
-      <JobPage jobs={jobs} completeJob={completeJob} />
+      <JobPage jobs={jobs} completeJob={completeJob} removeJob={removeJob} />
     </div>
   );
 }
