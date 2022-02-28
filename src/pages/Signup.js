@@ -55,7 +55,7 @@ const Signup = function () {
             </label>
           </div>
           <div className="form__group">
-            <button disabled={loading} type="submit" className="form__button">
+            <button disabled={loading} type="submit" className="form__button btnSmall">
               Signup
             </button>
           </div>
