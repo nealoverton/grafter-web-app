@@ -13,6 +13,8 @@ import { fireStoreDB, auth } from './firebase';
 const { uid } = auth.currentUser ? auth.currentUser : '';
 
 const getJobRef = (jobId) => doc(fireStoreDB, 'users', uid, 'jobs', jobId);
+const getMaterialRef = (jobId, materialId) =>
+  doc(fireStoreDB, 'users', uid, 'jobs', jobId, 'materials', materialId);
 
 const addUser = async (newuid, name = 'test name', company = 'test company') => {
   const newUserRef = doc(fireStoreDB, 'users', newuid);
@@ -88,10 +90,22 @@ const getMaterials = async (jobId) => {
 };
 
 const getMaterial = async (jobId, materialId) => {
-  const materialRef = doc(fireStoreDB, 'users', uid, 'jobs', jobId, 'materials', materialId);
+  const materialRef = getMaterialRef(jobId, materialId);
   const materialSnap = await getDoc(materialRef);
 
   return materialSnap.data();
+};
+
+const updateMaterial = async (jobId, materialId, data) => {
+  // function expects data to be an object
+  const materialRef = getMaterialRef(jobId, materialId);
+  return await updateDoc(materialRef, data);
+};
+
+const deleteMaterial = async (jobId, materialId) => {
+  // function expects data to be an object
+  const materialRef = getMaterialRef(jobId, materialId);
+  return await deleteDoc(materialRef);
 };
 
 const databaseService = {
@@ -103,7 +117,9 @@ const databaseService = {
   deleteJob,
   addMaterial,
   getMaterials,
-  getMaterial
+  getMaterial,
+  updateMaterial,
+  deleteMaterial
 };
 
 export default databaseService;
