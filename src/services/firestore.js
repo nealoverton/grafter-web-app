@@ -1,4 +1,4 @@
-import { doc, setDoc, collection, addDoc, getDocs } from 'firebase/firestore';
+import { doc, setDoc, collection, addDoc, getDocs, getDoc } from 'firebase/firestore';
 import { fireStoreDB } from './firebase';
 
 const addUser = async (newuid, name = 'test name', company = 'test company') => {
@@ -32,10 +32,18 @@ const getJobs = async (uid) => {
   return jobs;
 };
 
+const getJob = async (uid, jobId) => {
+  const jobRef = doc(fireStoreDB, 'users', uid, 'jobs', jobId);
+  const jobSnapshot = await getDoc(jobRef);
+
+  return jobSnapshot.data();
+};
+
 const databaseService = {
   addUser,
   addJob,
-  getJobs
+  getJobs,
+  getJob
 };
 
 export default databaseService;
