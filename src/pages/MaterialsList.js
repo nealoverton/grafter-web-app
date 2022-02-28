@@ -1,4 +1,3 @@
-// calculation
 // components
 // styling
 // primary app colour index.css - placeholder global var
@@ -6,10 +5,7 @@
 // BEM
 // classNames
 
-// Only submit after
-// Removing materials
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import EditableRow from '../components/forms/EditableRow';
 import ReadOnlyRow from '../components/forms/ReadOnlyRow';
 import './MaterialList.css';
@@ -32,6 +28,18 @@ const MaterialsList = function () {
     unit: '',
     price: ''
   });
+
+  let count = 0;
+
+  // eslint-disable-next-line no-unused-vars
+  const calculatePrice = materials.forEach((material) => {
+    const convertToNum = Number(material.price);
+    count += convertToNum;
+  });
+
+  useEffect(() => {
+    setTotalPrice(count.toFixed(2));
+  }, [materials]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -79,14 +87,6 @@ const MaterialsList = function () {
   if (materials.length === 0) {
     return <p>Please add item to the materials list</p>;
   }
-
-  let count = 0;
-
-  // eslint-disable-next-line no-unused-vars
-  const calculatePrice = materials.forEach((material) => {
-    const convertToNum = Number(material.price);
-    count += convertToNum;
-  });
 
   const handleEditClick = (e, material) => {
     e.preventDefault();
@@ -155,10 +155,7 @@ const MaterialsList = function () {
       </div>
 
       <div className="calculator__materialsList">
-        <p>{`£${totalPrice}`}</p>
-        <button type="submit" onClick={() => setTotalPrice(count.toFixed(2))}>
-          Total
-        </button>
+        <p className="totalPrice__materialList">{`Total Price: £${totalPrice}`}</p>
       </div>
 
       <div className="form__container__materialsList">
@@ -189,7 +186,9 @@ const MaterialsList = function () {
             onChange={(e) => setPrice(e.target.value)}
           />
           <div className="btn__materialList">
-            <button type="submit">Add Item</button>
+            <button type="submit" className="button__materialList">
+              Add Item
+            </button>
           </div>
         </form>
       </div>

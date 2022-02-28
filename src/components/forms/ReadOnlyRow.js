@@ -5,10 +5,18 @@ const ReadOnlyRow = function ({ item, handleEditClick, handleDeleteClick }) {
       <td>{item.unit}</td>
       <td>{item.price}</td>
       <td>
-        <button type="button" onClick={(e) => handleEditClick(e, item)}>
+        <button
+          type="button"
+          onClick={(e) => handleEditClick(e, item)}
+          className="actionBtn__materialList btnSmall"
+        >
           Edit{' '}
         </button>
-        <button type="button" onClick={() => handleDeleteClick(item.id)}>
+        <button
+          type="button"
+          onClick={() => handleDeleteClick(item.id)}
+          className="actionBtn__materialList btnSmall"
+        >
           Delete
         </button>
       </td>

@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import app from '../services/firebase';
+import './LoginStyle.css';
 
 const Login = function () {
   const emailRef = useRef();
@@ -53,7 +54,7 @@ const Login = function () {
             </label>
           </div>
           <div className="form__group">
-            <button disabled={loading} type="submit" className="form__button">
+            <button disabled={loading} type="submit" className="form__button btnSmall">
               Login
             </button>
           </div>
