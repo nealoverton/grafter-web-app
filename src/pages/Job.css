@@ -1,0 +1,102 @@
+.Job {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+  min-height: 90vh;
+  padding: 10px;
+}
+
+.Job__input {
+  text-align: center;
+  width: 100%;
+  text-overflow: wrap;
+  height: auto;
+  resize: none;
+}
+
+.Job__materials {
+  list-style-type: none;
+  width: 70%;
+}
+
+.Job__material-name {
+  font-size: 15px;
+}
+
+.Job__material-cost {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Job__attachments {
+  all: unset;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Job__img {
+  height: 25vw;
+  width: 25vw;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+  margin: 10px 10px;
+  border-radius: 10px;
+}
+
+.popup {
+  position: absolute;
+  z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.Job__calendar-row {
+  display: flex;
+  min-width: 50vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.Job__text-area {
+  all: unset;
+  word-break: break-word;
+  width: 80vw;
+  text-align: center;
+  height: 2em;
+  margin: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.address {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.dates {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.Job__attachment-icons {
+  width: 30px;
+  height: 30px;
+}
+
+.Job__attachment-icons__row {
+  display: flex;
+  width: 50vw;
+  justify-content: space-between;
+  margin-top: 20px;
+}
