@@ -1,5 +1,18 @@
-import { doc, setDoc, collection, addDoc, getDocs, getDoc, updateDoc } from 'firebase/firestore';
-import { fireStoreDB } from './firebase';
+import {
+  doc,
+  setDoc,
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  updateDoc,
+  deleteDoc
+} from 'firebase/firestore';
+import { fireStoreDB, auth } from './firebase';
+
+const { uid } = auth.currentUser ? auth.currentUser : '';
+
+const getJobRef = (jobId) => doc(fireStoreDB, 'users', uid, 'jobs', jobId);
 
 const addUser = async (newuid, name = 'test name', company = 'test company') => {
   const newUserRef = doc(fireStoreDB, 'users', newuid);
@@ -7,7 +20,6 @@ const addUser = async (newuid, name = 'test name', company = 'test company') => 
 };
 
 const addJob = async (
-  uid,
   name = 'testJob',
   address = '123 fake street',
   estimate = 0,
@@ -20,7 +32,7 @@ const addJob = async (
   return await addDoc(userRef, { name, address, estimate, estimateEndDate, isLive, jobNotes });
 };
 
-const getJobs = async (uid) => {
+const getJobs = async () => {
   const userRef = doc(fireStoreDB, 'users', uid);
   const jobsSnapshot = await getDocs(collection(userRef, 'jobs'));
   const jobs = [];
@@ -32,17 +44,24 @@ const getJobs = async (uid) => {
   return jobs;
 };
 
-const getJob = async (uid, jobId) => {
+const getJob = async (jobId) => {
+  console.log(uid, jobId);
   const jobRef = doc(fireStoreDB, 'users', uid, 'jobs', jobId);
   const jobSnapshot = await getDoc(jobRef);
 
   return jobSnapshot.data();
 };
 
-const updateJob = async (uid, jobId, data) => {
+const updateJob = async (jobId, data) => {
   // function expects data argument to be an object
-  const jobRef = doc(fireStoreDB, 'users', uid, 'jobs', jobId);
+  const jobRef = getJobRef(jobId);
   return await updateDoc(jobRef, data);
+};
+
+const deleteJob = async (jobId) => {
+  const jobRef = getJobRef(jobId);
+  console.log(jobRef);
+  return await deleteDoc(jobRef);
 };
 
 const databaseService = {
@@ -50,7 +69,8 @@ const databaseService = {
   addJob,
   getJobs,
   getJob,
-  updateJob
+  updateJob,
+  deleteJob
 };
 
 export default databaseService;
