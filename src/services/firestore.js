@@ -1,27 +1,41 @@
-import { doc, setDoc, collection, addDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, addDoc, getDocs } from 'firebase/firestore';
 import { fireStoreDB } from './firebase';
-
-//const usersRef = collection(fireStoreDB, 'users');
 
 const addUser = async (newuid, name = 'test name', company = 'test company') => {
   const newUserRef = doc(fireStoreDB, 'users', newuid);
   await setDoc(newUserRef, { name, company, uid: newuid });
 };
 
-const addJob = async (uid, name = 'testJob', estimate = 0) => {
+const addJob = async (
+  uid,
+  name = 'testJob',
+  address = '123 fake street',
+  estimate = 0,
+  estimateEndDate = '',
+  isLive = true,
+  jobNotes = 'blah'
+) => {
   // get current user file
   const userRef = collection(fireStoreDB, 'users', uid, 'jobs');
-  return await addDoc(userRef, { name, estimate });
+  return await addDoc(userRef, { name, address, estimate, estimateEndDate, isLive, jobNotes });
 };
 
 const getJobs = async (uid) => {
-  const jobSnapshot = await getDoc(doc(fireStoreDB, 'users', uid));
-  console.log(jobSnapshot.data());
+  const userRef = doc(fireStoreDB, 'users', uid);
+  const jobsSnapshot = await getDocs(collection(userRef, 'jobs'));
+  const jobs = [];
+
+  // iterates through snapshot and pushes job data
+  jobsSnapshot.forEach((job) => {
+    jobs.push({ id: job.id, ...job.data() });
+  });
+  return jobs;
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export const databaseService = {
+const databaseService = {
   addUser,
   addJob,
   getJobs
 };
+
+export default databaseService;

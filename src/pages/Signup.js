@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { databaseService } from '../services/firestore';
+import databaseService from '../services/firestore';
 
 const Signup = function () {
   const emailRef = useRef();
