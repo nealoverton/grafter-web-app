@@ -87,6 +87,7 @@ ul {
 
 h1 {
   font-size: 3.5em;
+  padding-top: 2vh;
 }
 
 h2 {
@@ -143,5 +144,5 @@ td {
 
 .tableInput__materialList {
   font-size: 1em;
-  max-width: 55px;
+  width: 20vw;
 }
