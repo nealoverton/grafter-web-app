@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+
 import './HomeStyle.css';
 
 const Home = function () {
@@ -23,8 +24,6 @@ const Home = function () {
 
   return (
     <div className="container">
-      <h1 className="Header">Welcome!</h1>
-
       {error && <h1>{error}</h1>}
       <div className="homePage__buttons">
         <Link to="/jobs">
