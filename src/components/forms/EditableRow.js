@@ -1,9 +1,4 @@
-const EditableRow = function ({ editFormData, handleEditFormChange }) {
-  //   console.log(editFormData, '<<<formData');
-  //   console.log(handleEditFormChange, '<<<edit func');
-
-  //   console.log(editFormData.materialName, '<<<formData name');
-
+const EditableRow = function ({ editFormData, handleEditFormChange, handleCancelClick }) {
   return (
     <tr>
       <td>
@@ -38,6 +33,9 @@ const EditableRow = function ({ editFormData, handleEditFormChange }) {
       </td>
       <td>
         <button type="submit">Save</button>
+        <button type="button" onClick={handleCancelClick}>
+          Cancel
+        </button>
       </td>
     </tr>
   );

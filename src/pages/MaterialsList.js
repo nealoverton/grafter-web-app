@@ -15,11 +15,11 @@ import ReadOnlyRow from '../components/forms/ReadOnlyRow';
 import './MaterialList.css';
 
 const MaterialsList = function () {
-  // eslint-disable-next-line no-unused-vars
   const [materialName, setMaterialName] = useState('');
   const [unit, setUnit] = useState('');
   const [price, setPrice] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
+  // Placeholder materials data
   const [materials, setMaterials] = useState([
     { materialName: 'wood', unit: '3', price: '2.00', id: 1 },
     { materialName: 'metal', unit: '1', price: '1.00', id: 2 },
@@ -32,8 +32,6 @@ const MaterialsList = function () {
     unit: '',
     price: ''
   });
-
-  // Placeholder materials data
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,7 +47,7 @@ const MaterialsList = function () {
   const handleEditFormChange = (e) => {
     e.preventDefault();
 
-    const fieldName = e.target.getAttribute('materialName');
+    const fieldName = e.target.getAttribute('name');
     const fieldValue = e.target.value;
 
     const newFormdata = { ...editFormData };
@@ -91,7 +89,6 @@ const MaterialsList = function () {
   });
 
   const handleEditClick = (e, material) => {
-    console.log(material, '<<<');
     e.preventDefault();
     setEditMaterialId(material.id);
 
@@ -101,7 +98,20 @@ const MaterialsList = function () {
       price: material.price
     };
     setEditFormData(formValues);
-    console.log(editFormData);
+  };
+
+  const handleCancelClick = () => {
+    setEditMaterialId(null);
+  };
+
+  const handleDeleteClick = (materialId) => {
+    const newMaterials = [...materials];
+
+    const index = materials.findIndex((material) => material.id === materialId);
+
+    newMaterials.splice(index, 1);
+
+    setMaterials(newMaterials);
   };
 
   return (
@@ -127,9 +137,16 @@ const MaterialsList = function () {
                   <EditableRow
                     editFormData={editFormData}
                     handleEditFormChange={handleEditFormChange}
+                    key={item.materialName}
+                    handleCancelClick={handleCancelClick}
                   />
                 ) : (
-                  <ReadOnlyRow item={item} handleEditClick={handleEditClick} />
+                  <ReadOnlyRow
+                    item={item}
+                    handleEditClick={handleEditClick}
+                    handleDeleteClick={handleDeleteClick}
+                    key={item.materialName}
+                  />
                 )
               )}
             </tbody>

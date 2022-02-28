@@ -1,4 +1,4 @@
-const ReadOnlyRow = function ({ item, handleEditClick }) {
+const ReadOnlyRow = function ({ item, handleEditClick, handleDeleteClick }) {
   return (
     <tr>
       <td>{item.materialName}</td>
@@ -7,6 +7,9 @@ const ReadOnlyRow = function ({ item, handleEditClick }) {
       <td>
         <button type="button" onClick={(e) => handleEditClick(e, item)}>
           Edit{' '}
+        </button>
+        <button type="button" onClick={() => handleDeleteClick(item.id)}>
+          Delete
         </button>
       </td>
     </tr>
