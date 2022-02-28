@@ -2,13 +2,22 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { databaseService } from '../services/firestore';
+
 import './HomeStyle.css';
 
 const Home = function () {
   const [error, setError] = useState('');
-  const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();
 
   const navigate = useNavigate();
+
+  const addJob = () => {
+    const { uid } = currentUser;
+    databaseService.getJobs(uid).then((data) => {
+      console.log(data);
+    });
+  };
 
   const handleLogout = async () => {
     setError('');
@@ -24,7 +33,9 @@ const Home = function () {
   return (
     <div className="container">
       <h1 className="Header">Welcome!</h1>
-
+      <button type="button" onClick={addJob}>
+        HI
+      </button>
       {error && <h1>{error}</h1>}
       <div className="homePage__buttons">
         <Link to="/jobs">
