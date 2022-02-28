@@ -22,6 +22,13 @@ function JobsList() {
     setJobs(removeArr);
   };
 
+  const updateJob = (jobId, newValue) => {
+    if (!newValue.text || /^\s*$/.test(newValue.text)) {
+      return;
+    }
+    setJobs((prev) => prev.map((item) => (item.id === jobId ? newValue : item)));
+  };
+
   const completeJob = (id) => {
     const updatedJobs = jobs.map((job) => {
       if (job.id === id) {
@@ -34,9 +41,9 @@ function JobsList() {
 
   return (
     <div className="jobs-list">
-      <h1>What jobs do you have today?</h1>
+      <h1>Live Jobs</h1>
       <JobForm onSubmit={addJob} />
-      <JobPage jobs={jobs} completeJob={completeJob} removeJob={removeJob} />
+      <JobPage jobs={jobs} completeJob={completeJob} removeJob={removeJob} updateJob={updateJob} />
     </div>
   );
 }
