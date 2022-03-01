@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import app from '../services/firebase';
-import './LoginStyle.css';
+import './Forms.css';
 
 const Login = function () {
   const emailRef = useRef();
@@ -14,8 +13,6 @@ const Login = function () {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(app);
-
     try {
       setError('');
       setLoading(true);
@@ -23,7 +20,6 @@ const Login = function () {
       await login(emailRef.current.value, passwordRef.current.value);
       navigate('/');
     } catch (err) {
-      console.log(err);
       setError('Failed to Login');
     } finally {
       setLoading(false);
@@ -33,25 +29,33 @@ const Login = function () {
   return (
     <div className="container">
       <div className="form__container">
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} className="form__element">
           {error && <div>{error}</div>}
           <div className="form__group">
             <label htmlFor="email" className="form__label">
               Email :
-              <input type="text" id="email" className="form__control" ref={emailRef} required />
             </label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              className="form__control"
+              ref={emailRef}
+              required
+            />
           </div>
           <div className="form__group">
             <label htmlFor="password" className="form__label">
               Password :
-              <input
-                type="password"
-                id="password"
-                className="form__control"
-                ref={passwordRef}
-                required
-              />
             </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="form__control"
+              ref={passwordRef}
+              required
+            />
           </div>
           <div className="form__group">
             <button disabled={loading} type="submit" className="form__button btnSmall">
