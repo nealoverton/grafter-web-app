@@ -1,15 +1,34 @@
-import { doc, setDoc, collection, addDoc, getDocs } from 'firebase/firestore';
-import { fireStoreDB } from './firebase';
+import {
+  doc,
+  setDoc,
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  updateDoc,
+  deleteDoc
+} from 'firebase/firestore';
+import { fireStoreDB, auth } from './firebase';
+
+const { uid } = auth.currentUser ? auth.currentUser : '';
+
+const getJobRef = (jobId) => doc(fireStoreDB, 'users', uid, 'jobs', jobId);
+const getMaterialRef = (jobId, materialId) =>
+  doc(fireStoreDB, 'users', uid, 'jobs', jobId, 'materials', materialId);
 
 const addUser = async (newuid, name = 'test name', company = 'test company') => {
   const newUserRef = doc(fireStoreDB, 'users', newuid);
-  await setDoc(newUserRef, { name, company, uid: newuid });
+
+  return await setDoc(newUserRef, { name, company, uid: newuid });
 };
 
 const addJob = async (
-  uid,
   name = 'testJob',
-  address = '123 fake street',
+  firstAddressLine = '123 fake street',
+  secondAddressLine = 'pretend boulevard',
+  thirdAddressLine = '',
+  city = 'test villes',
+  postcode = '352 posty',
   estimate = 0,
   estimateEndDate = '',
   isLive = true,
@@ -17,10 +36,22 @@ const addJob = async (
 ) => {
   // get current user file
   const userRef = collection(fireStoreDB, 'users', uid, 'jobs');
-  return await addDoc(userRef, { name, address, estimate, estimateEndDate, isLive, jobNotes });
+
+  return await addDoc(userRef, {
+    name,
+    firstAddressLine,
+    secondAddressLine,
+    thirdAddressLine,
+    city,
+    estimate,
+    postcode,
+    estimateEndDate,
+    isLive,
+    jobNotes
+  });
 };
 
-const getJobs = async (uid) => {
+const getJobs = async () => {
   const userRef = doc(fireStoreDB, 'users', uid);
   const jobsSnapshot = await getDocs(collection(userRef, 'jobs'));
   const jobs = [];
@@ -29,13 +60,81 @@ const getJobs = async (uid) => {
   jobsSnapshot.forEach((job) => {
     jobs.push({ id: job.id, ...job.data() });
   });
+
   return jobs;
+};
+
+const getJob = async (jobId) => {
+  const jobRef = getJobRef(jobId);
+  const jobSnapshot = await getDoc(jobRef);
+
+  return jobSnapshot.data();
+};
+
+const updateJob = async (jobId, data) => {
+  // function expects data argument to be an object
+  const jobRef = getJobRef(jobId);
+
+  return await updateDoc(jobRef, data);
+};
+
+const deleteJob = async (jobId) => {
+  const jobRef = getJobRef(jobId);
+
+  return await deleteDoc(jobRef);
+};
+
+const addMaterial = async (jobId, name = 'some material', quantity = 3, price = 3.5) => {
+  // get current job file
+  const jobRef = collection(fireStoreDB, 'users', uid, 'jobs', jobId, 'materials');
+
+  return await addDoc(jobRef, { name, quantity, price, jobId });
+};
+
+const getMaterials = async (jobId) => {
+  const jobRef = getJobRef(jobId);
+  const materialsSnapshot = await getDocs(collection(jobRef, 'materials'));
+  const materials = [];
+
+  // iterates through snapshot and pushes job data
+  materialsSnapshot.forEach((job) => {
+    materials.push({ id: job.id, ...job.data() });
+  });
+
+  return materials;
+};
+
+const getMaterial = async (jobId, materialId) => {
+  const materialRef = getMaterialRef(jobId, materialId);
+  const materialSnap = await getDoc(materialRef);
+
+  return materialSnap.data();
+};
+
+const updateMaterial = async (jobId, materialId, data) => {
+  // function expects data to be an object
+  const materialRef = getMaterialRef(jobId, materialId);
+  return await updateDoc(materialRef, data);
+};
+
+const deleteMaterial = async (jobId, materialId) => {
+  // function expects data to be an object
+  const materialRef = getMaterialRef(jobId, materialId);
+  return await deleteDoc(materialRef);
 };
 
 const databaseService = {
   addUser,
   addJob,
-  getJobs
+  getJobs,
+  getJob,
+  updateJob,
+  deleteJob,
+  addMaterial,
+  getMaterials,
+  getMaterial,
+  updateMaterial,
+  deleteMaterial
 };
 
 export default databaseService;
