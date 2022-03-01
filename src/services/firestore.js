@@ -36,6 +36,7 @@ const addJob = async (
 
   jobEndDate = '',
   isLive = true,
+  isComplete = false,
   jobNotes = 'blah'
 ) => {
   // get current user file
@@ -52,6 +53,7 @@ const addJob = async (
     jobStartDate,
     jobEndDate,
     isLive,
+    isComplete,
     jobNotes,
     createdAt: getCurrentTimestamp,
     uid: auth.currentUser.uid
