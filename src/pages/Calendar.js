@@ -8,21 +8,23 @@ export const reactCalendar = function () {
 
   useEffect(() => {
     databaseService.getJobs('EBRklWxRHARgMY3PADB7omUiLuC2').then((jobsFromFirestore) => {
-      console.log(jobsFromFirestore);
-      setJob(jobsFromFirestore);
+      console.log(jobsFromFirestore, '<<<<');
+      if (jobsFromFirestore.length > 0) {
+        const newJob = [
+          {
+            title: `${jobsFromFirestore['0'].name}`,
+            start: `${jobsFromFirestore['0'].jobStartDate}`,
+            end: `${jobsFromFirestore['0'].jobEndDate}`
+          }
+        ];
+        setJob(newJob);
+      }
     });
   }, []);
 
-  // console.log(job);
-
   return (
     <div>
-      <FullCalendar
-        plugins={[dayGridPlugin]}
-        initialView="dayGridMonth"
-        weekends
-        events={(job.jobStartDate, job.jobEndDate)}
-      />
+      <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" weekends events={job} />
     </div>
   );
 };
