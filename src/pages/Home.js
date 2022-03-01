@@ -34,19 +34,19 @@ const Home = function () {
         HI
       </button>
       {error && <h1>{error}</h1>}
-      <div className="homePage__buttons">
+      <div className="homePage__buttons-container">
         <Link to="/jobs">
-          <button type="button" className="JobsButton">
+          <button type="button" className="homePage__buttons">
             Jobs
           </button>
         </Link>
         <Link to="/">
-          <button type="button" className="sketch">
+          <button type="button" className="homePage__buttons">
             Sketch
           </button>
         </Link>
         <Link to="/calendar">
-          <button type="button" className="calendar">
+          <button type="button" className="homePage__buttons">
             Calendar
           </button>
         </Link>
