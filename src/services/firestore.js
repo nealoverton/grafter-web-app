@@ -58,11 +58,13 @@ const addJob = async (
   });
 };
 
+
 const getJobs = async () => {
   const userRef = doc(fireStoreDB, 'users', auth.currentUser.uid);
+
   const jobsSnapshot = await getDocs(collection(userRef, 'jobs'));
   const jobs = [];
-
+  console.log(jobsSnapshot);
   // iterates through snapshot and pushes job data
   jobsSnapshot.forEach((job) => {
     jobs.push({ id: job.id, ...job.data() });
