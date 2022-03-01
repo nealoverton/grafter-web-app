@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { FaCalendarAlt, FaCamera, FaImage } from 'react-icons/fa';
 import MaterialsList from './MaterialsList';
 import { WebcamCapture } from '../components/media/WebcamCapture';
@@ -34,7 +35,7 @@ const Job = function () {
   };
 
   const [job, setJob] = useState(testJob);
-
+  const { jobId } = useParams();
   const [title, setTitle] = useState(job.title);
   const [notes, setNotes] = useState(job.notes ? job.notes : null);
   const [address, setAddress] = useState(job.address ? job.address : null);
@@ -105,7 +106,7 @@ const Job = function () {
         {job.notes}
       </textarea>
 
-      <MaterialsList />
+      <MaterialsList jobId={jobId} />
 
       <div className="Job__attachment-buttons__row">
         <FaCamera className="Job__attachment-icons" onClick={() => setCameraIsOpen(true)} />
