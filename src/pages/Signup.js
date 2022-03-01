@@ -18,12 +18,14 @@ const Signup = function () {
       setError('');
       setLoading(true);
 
-      signup(emailRef.current.value, passwordRef.current.value).then((data) => {
-        const { uid } = data.user;
-        databaseService.addUser(uid);
-      });
-
-      navigate('/');
+      signup(emailRef.current.value, passwordRef.current.value)
+        .then((data) => {
+          const { uid } = data.user;
+          return databaseService.addUser(uid);
+        })
+        .then(() => {
+          navigate('/');
+        });
     } catch (err) {
       setError('Failed to Signup');
     } finally {
