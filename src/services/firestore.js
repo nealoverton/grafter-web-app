@@ -24,7 +24,11 @@ const addUser = async (newuid, name = 'test name', company = 'test company') => 
 
 const addJob = async (
   name = 'testJob',
-  address = '123 fake street',
+  firstAddressLine = '123 fake street',
+  secondAddressLine = 'pretend boulevard',
+  thirdAddressLine = '',
+  city = 'test villes',
+  postcode = '352 posty',
   estimate = 0,
   estimateEndDate = '',
   isLive = true,
@@ -33,7 +37,18 @@ const addJob = async (
   // get current user file
   const userRef = collection(fireStoreDB, 'users', uid, 'jobs');
 
-  return await addDoc(userRef, { name, address, estimate, estimateEndDate, isLive, jobNotes });
+  return await addDoc(userRef, {
+    name,
+    firstAddressLine,
+    secondAddressLine,
+    thirdAddressLine,
+    city,
+    estimate,
+    postcode,
+    estimateEndDate,
+    isLive,
+    jobNotes
+  });
 };
 
 const getJobs = async () => {
