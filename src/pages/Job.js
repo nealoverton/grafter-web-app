@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { FaCalendarAlt, FaCamera, FaImage } from 'react-icons/fa';
 import MaterialsList from './MaterialsList';
 import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
+import databaseService from '../services/firestore';
 
 const Job = function () {
   const testJob = {
@@ -33,6 +35,7 @@ const Job = function () {
     ]
   };
 
+  const { jobId } = useParams();
   const [job, setJob] = useState(testJob);
 
   const [title, setTitle] = useState(job.title);
@@ -40,8 +43,10 @@ const Job = function () {
   const [address, setAddress] = useState(job.address ? job.address : null);
   const [cameraIsOpen, setCameraIsOpen] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     window.scrollTo(0, 0);
+    const dbJob = await databaseService.getJob(jobId);
+    console.log(dbJob);
   });
 
   const handleChange = (event, func) => {
@@ -105,7 +110,7 @@ const Job = function () {
         {job.notes}
       </textarea>
 
-      <MaterialsList />
+      <MaterialsList jobId={jobId} />
 
       <div className="Job__attachment-buttons__row">
         <FaCamera className="Job__attachment-icons" onClick={() => setCameraIsOpen(true)} />
