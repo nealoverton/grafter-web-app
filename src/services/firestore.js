@@ -178,7 +178,9 @@ const deleteImage = async (jobId, imageName, imageId) => {
   const imageRefFireStore = doc(fireStoreDB, 'users', userUid, 'jobs', jobId, 'images', imageId);
   const imageRefCloudStorage = ref(storage, `files/${userUid}/${jobId}/${imageName}`);
   try {
+    // deletes from firestore
     await deleteDoc(imageRefFireStore);
+    // deletes from storeage
     await deleteObject(imageRefCloudStorage);
   } catch (err) {
     return err;
