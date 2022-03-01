@@ -1,27 +1,29 @@
-import Calendar from 'react-calendar';
-import React, { useState } from 'react';
-import './CalendarStyle.css';
+import React, { useEffect, useState } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import databaseService from '../services/firestore';
 
-const ReactCalendar = function () {
-  const [dates, setDate] = useState(new Date());
-  const onChange = (date) => {
-    setDate(date);
-  };
-  const addEvent = (value) => {
-    console.log('clicked day:', value);
-  };
+export const reactCalendar = function () {
+  const [job, setJob] = useState([]);
+
+  useEffect(() => {
+    databaseService.getJobs('EBRklWxRHARgMY3PADB7omUiLuC2').then((jobsFromFirestore) => {
+      console.log(jobsFromFirestore);
+      setJob(jobsFromFirestore);
+    });
+  }, []);
+
+  // console.log(job);
+
   return (
     <div>
-      <Calendar
-        onChange={onChange}
-        value={dates}
-        calendarType="US"
-        showWeekNumbers
-        selectRange
-        onClickDay={addEvent}
+      <FullCalendar
+        plugins={[dayGridPlugin]}
+        initialView="dayGridMonth"
+        weekends
+        events={(job.jobStartDate, job.jobEndDate)}
       />
     </div>
   );
 };
-
-export default ReactCalendar;
+export default reactCalendar;
