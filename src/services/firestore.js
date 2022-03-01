@@ -33,7 +33,6 @@ const addJob = async (
   postcode = '352 posty',
   estimate = 0,
   jobStartDate = '',
-
   jobEndDate = '',
   isLive = true,
   isComplete = false,
@@ -60,6 +59,41 @@ const addJob = async (
   });
 };
 
+const addJobDEV = async (
+  uid,
+  name = 'testJob',
+  firstAddressLine = '123 fake street',
+  secondAddressLine = 'pretend boulevard',
+  thirdAddressLine = '',
+  city = 'test villes',
+  postcode = '352 posty',
+  estimate = 0,
+  jobStartDate = '',
+  jobEndDate = '',
+  isLive = true,
+  isComplete = false,
+  jobNotes = 'blah'
+) => {
+  // get current user file
+  const userRef = collection(fireStoreDB, 'users', uid, 'jobs');
+
+  return await addDoc(userRef, {
+    name,
+    firstAddressLine,
+    secondAddressLine,
+    thirdAddressLine,
+    city,
+    estimate,
+    postcode,
+    jobStartDate,
+    jobEndDate,
+    isLive,
+    isComplete,
+    jobNotes,
+    createdAt: getCurrentTimestamp,
+    uid: uid
+  });
+};
 
 const getJobs = async () => {
   const userRef = doc(fireStoreDB, 'users', auth.currentUser.uid);
@@ -208,7 +242,8 @@ const databaseService = {
   deleteMaterial,
   uploadImage,
   getImages,
-  deleteImage
+  deleteImage,
+  addJobDEV
 };
 
 export default databaseService;
