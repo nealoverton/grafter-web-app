@@ -6,11 +6,15 @@ import {
   getDocs,
   getDoc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
+  serverTimestamp
 } from 'firebase/firestore';
-import { fireStoreDB, auth } from './firebase';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { fireStoreDB, auth, storage } from './firebase';
 
 const { uid } = auth.currentUser ? auth.currentUser : '';
+
+const getCurrentTimestamp = serverTimestamp();
 
 const getJobRef = (jobId) => doc(fireStoreDB, 'users', uid, 'jobs', jobId);
 const getMaterialRef = (jobId, materialId) =>
@@ -19,7 +23,7 @@ const getMaterialRef = (jobId, materialId) =>
 const addUser = async (newuid, name = 'test name', company = 'test company') => {
   const newUserRef = doc(fireStoreDB, 'users', newuid);
 
-  return await setDoc(newUserRef, { name, company, uid: newuid });
+  return await setDoc(newUserRef, { name, company, userId: newuid });
 };
 
 const addJob = async (
@@ -47,7 +51,9 @@ const addJob = async (
     postcode,
     estimateEndDate,
     isLive,
-    jobNotes
+    jobNotes,
+    createdAt: getCurrentTimestamp,
+    uid
   });
 };
 
@@ -96,9 +102,9 @@ const getMaterials = async (jobId) => {
   const materialsSnapshot = await getDocs(collection(jobRef, 'materials'));
   const materials = [];
 
-  // iterates through snapshot and pushes job data
-  materialsSnapshot.forEach((job) => {
-    materials.push({ id: job.id, ...job.data() });
+  // iterates through snapshot and pushes material data
+  materialsSnapshot.forEach((material) => {
+    materials.push({ id: material.id, ...material.data() });
   });
 
   return materials;
@@ -123,6 +129,49 @@ const deleteMaterial = async (jobId, materialId) => {
   return await deleteDoc(materialRef);
 };
 
+const addImageFile = async (url, name, jobId) => {
+  const imageRef = collection(fireStoreDB, 'users', uid, 'jobs', jobId, 'images');
+
+  return await addDoc(imageRef, {
+    url,
+    name,
+    createdAt: getCurrentTimestamp,
+    uid
+  });
+};
+
+const uploadImage = (jobId, file) => {
+  // This fixes bug where image was not always getting uploaded
+  const userUid = uid;
+  const filePath = `${userUid}/${jobId}/${file.name}`;
+  const storageRef = ref(storage, `files/${filePath}`);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  uploadTask.on(
+    'state_changed',
+    () => {},
+    (error) => error,
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        addImageFile(downloadURL, file.name, jobId);
+      });
+    }
+  );
+};
+
+const getImages = async (jobId) => {
+  const imagesSnapshot = await getDocs(
+    collection(fireStoreDB, 'users', uid, 'jobs', jobId, 'images')
+  );
+  const images = [];
+
+  imagesSnapshot.forEach((image) => {
+    images.push({ id: image.id, ...image.data() });
+  });
+
+  return images;
+};
+
 const databaseService = {
   addUser,
   addJob,
@@ -134,7 +183,9 @@ const databaseService = {
   getMaterials,
   getMaterial,
   updateMaterial,
-  deleteMaterial
+  deleteMaterial,
+  uploadImage,
+  getImages
 };
 
 export default databaseService;
