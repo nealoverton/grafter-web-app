@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import databaseService from '../services/firestore';
 
 import './HomeStyle.css';
 
@@ -22,8 +23,16 @@ const Home = function () {
     }
   };
 
+  const testFunc = async () => {
+    const userId = 'EBRklWxRHARgMY3PADB7omUiLuC2';
+    await databaseService.addJobDEV(userId);
+  };
+
   return (
     <div className="container">
+      <button type="button" onClick={testFunc}>
+        HI
+      </button>
       {error && <h1>{error}</h1>}
       <div className="homePage__buttons">
         <Link to="/jobs">

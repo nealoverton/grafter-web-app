@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import './Forms.css';
 
 const ForgotPassword = function () {
   const emailRef = useRef();
@@ -27,13 +28,13 @@ const ForgotPassword = function () {
   return (
     <div className="container">
       <div className="form__container">
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} className="form__element">
           {error && <div>{error}</div>}
           <div className="form__group">
             <label htmlFor="email" className="form__label">
               Email :
-              <input type="text" id="email" className="form__control" ref={emailRef} required />
             </label>
+            <input type="text" id="email" className="form__control" ref={emailRef} required />
           </div>
           <div className="form__group">
             <button disabled={loading} type="submit" className="form__button btnSmall">
