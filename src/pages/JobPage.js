@@ -25,7 +25,7 @@ function JobPage({ jobs, completeJob, removeJob, updateJob }) {
     // eslint-disable-next-line react/no-array-index-key
     <div className={job.isComplete ? 'job-row complete' : 'job-row'} key={index}>
       <div key={job.id} onClick={() => completeJob(job.id)} aria-hidden="true">
-        {job.text}
+        {job.name}
       </div>
       <div className="icons">
         <RiCloseCircleLine onClick={() => removeJob(job.id)} className="delete-icon" />
