@@ -4,10 +4,12 @@
 // Rounded
 // BEM
 // classNames
+// job id placeholder yvBkjnyBVPXdQDOUa1Ic
 
 import { useState, useEffect } from 'react';
 import EditableRow from '../components/forms/EditableRow';
 import ReadOnlyRow from '../components/forms/ReadOnlyRow';
+import databaseService from '../services/firestore';
 import './MaterialList.css';
 
 const MaterialsList = function () {
@@ -15,12 +17,7 @@ const MaterialsList = function () {
   const [unit, setUnit] = useState('');
   const [price, setPrice] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
-  // Placeholder materials data
-  const [materials, setMaterials] = useState([
-    { materialName: 'wood', unit: '3', price: '2.00', id: 1 },
-    { materialName: 'metal', unit: '1', price: '1.00', id: 2 },
-    { materialName: 'stone', unit: '5', price: '3.00', id: 3 }
-  ]);
+  const [materials, setMaterials] = useState([]);
 
   const [editMaterialId, setEditMaterialId] = useState(null);
   const [editFormData, setEditFormData] = useState({
@@ -28,6 +25,29 @@ const MaterialsList = function () {
     unit: '',
     price: ''
   });
+
+  const [empty, setEmpty] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // jobId placeholder - need to change to useParams()
+  const jobId = 'yvBkjnyBVPXdQDOUa1Ic';
+
+  // getMaterials - GET request to firestore
+  useEffect(() => {
+    setIsLoading(true);
+    databaseService.getMaterials(jobId).then((materialsInfo) => {
+      setMaterials(materialsInfo);
+      setIsLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (materials.length > 0) {
+      setEmpty(false);
+    } else {
+      setEmpty(true);
+    }
+  }, [materials]);
 
   let count = 0;
 
@@ -50,6 +70,7 @@ const MaterialsList = function () {
     setPrice('');
 
     // Make POST request to firebase
+    databaseService.addMaterial(jobId, materialName, unit, price);
   };
 
   const handleEditFormChange = (e) => {
@@ -82,11 +103,10 @@ const MaterialsList = function () {
 
     setMaterials(newMaterials);
     setEditMaterialId(null);
-  };
 
-  if (materials.length === 0) {
-    return <p>Please add item to the materials list</p>;
-  }
+    // updateMaterial - PATCH request to firestore
+    databaseService.updateMaterial(jobId, editMaterialId, editedMaterial);
+  };
 
   const handleEditClick = (e, material) => {
     e.preventDefault();
@@ -112,7 +132,19 @@ const MaterialsList = function () {
     newMaterials.splice(index, 1);
 
     setMaterials(newMaterials);
+
+    databaseService.deleteMaterial(jobId, materialId);
   };
+
+  const errorMessage = (
+    <tr>
+      <th>Please enter a material</th>
+    </tr>
+  );
+
+  const loadingMessage = <h2>Loading...</h2>;
+
+  if (isLoading) return loadingMessage;
 
   return (
     <div className="container__MaterialsList">
@@ -132,23 +164,25 @@ const MaterialsList = function () {
               </tr>
             </thead>
             <tbody>
-              {materials.map((item) =>
-                editMaterialId === item.id ? (
-                  <EditableRow
-                    editFormData={editFormData}
-                    handleEditFormChange={handleEditFormChange}
-                    key={item.materialName}
-                    handleCancelClick={handleCancelClick}
-                  />
-                ) : (
-                  <ReadOnlyRow
-                    item={item}
-                    handleEditClick={handleEditClick}
-                    handleDeleteClick={handleDeleteClick}
-                    key={item.materialName}
-                  />
-                )
-              )}
+              {empty
+                ? errorMessage
+                : materials.map((item) =>
+                    editMaterialId === item.id ? (
+                      <EditableRow
+                        editFormData={editFormData}
+                        handleEditFormChange={handleEditFormChange}
+                        key={item.materialName}
+                        handleCancelClick={handleCancelClick}
+                      />
+                    ) : (
+                      <ReadOnlyRow
+                        item={item}
+                        handleEditClick={handleEditClick}
+                        handleDeleteClick={handleDeleteClick}
+                        key={item.materialName}
+                      />
+                    )
+                  )}
             </tbody>
           </table>
         </form>

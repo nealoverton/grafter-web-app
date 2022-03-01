@@ -57,8 +57,6 @@ const addJob = async (
     uid: auth.currentUser.uid
   });
 };
-
-
 const getJobs = async () => {
   const userRef = doc(fireStoreDB, 'users', auth.currentUser.uid);
 
@@ -93,11 +91,11 @@ const deleteJob = async (jobId) => {
   return await deleteDoc(jobRef);
 };
 
-const addMaterial = async (jobId, name = 'some material', quantity = 3, price = 3.5) => {
+const addMaterial = async (jobId, materialName = 'some material', unit = 3, price = 3.5) => {
   // get current job file
   const jobRef = collection(fireStoreDB, 'users', auth.currentUser.uid, 'jobs', jobId, 'materials');
 
-  return await addDoc(jobRef, { name, quantity, price, jobId });
+  return await addDoc(jobRef, { materialName, unit, price, jobId });
 };
 
 const getMaterials = async (jobId) => {
