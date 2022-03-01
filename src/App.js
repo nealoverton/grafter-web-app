@@ -54,7 +54,7 @@ function App() {
             }
           />
           <Route
-            path="/materials"
+            path="/jobs/:jobId/materials"
             element={
               <PrivateRoute>
                 <MaterialsList />
