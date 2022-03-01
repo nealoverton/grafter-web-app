@@ -34,7 +34,9 @@ const addJob = async (
   city = 'test villes',
   postcode = '352 posty',
   estimate = 0,
-  estimateEndDate = '',
+  jobStartDate = '',
+
+  jobEndDate = '',
   isLive = true,
   jobNotes = 'blah'
 ) => {
@@ -49,7 +51,8 @@ const addJob = async (
     city,
     estimate,
     postcode,
-    estimateEndDate,
+    jobStartDate,
+    jobEndDate,
     isLive,
     jobNotes,
     createdAt: getCurrentTimestamp,
