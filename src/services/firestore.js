@@ -9,7 +9,7 @@ import {
   deleteDoc,
   serverTimestamp
 } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { fireStoreDB, auth, storage } from './firebase';
 
 const { uid } = auth.currentUser ? auth.currentUser : '';
@@ -172,6 +172,19 @@ const getImages = async (jobId) => {
   return images;
 };
 
+const deleteImage = async (jobId, imageName, imageId) => {
+  // This fixes bug where image was not always getting deleted
+  const userUid = uid;
+  const imageRefFireStore = doc(fireStoreDB, 'users', userUid, 'jobs', jobId, 'images', imageId);
+  const imageRefCloudStorage = ref(storage, `files/${userUid}/${jobId}/${imageName}`);
+  try {
+    await deleteDoc(imageRefFireStore);
+    await deleteObject(imageRefCloudStorage);
+  } catch (err) {
+    return err;
+  }
+};
+
 const databaseService = {
   addUser,
   addJob,
@@ -185,7 +198,8 @@ const databaseService = {
   updateMaterial,
   deleteMaterial,
   uploadImage,
-  getImages
+  getImages,
+  deleteImage
 };
 
 export default databaseService;
