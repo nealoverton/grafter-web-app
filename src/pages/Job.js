@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaCalendarAlt, FaCamera, FaImage } from 'react-icons/fa';
 import MaterialsList from './MaterialsList';
+import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
 
 const Job = function () {
@@ -37,6 +38,7 @@ const Job = function () {
   const [title, setTitle] = useState(job.title);
   const [notes, setNotes] = useState(job.notes ? job.notes : null);
   const [address, setAddress] = useState(job.address ? job.address : null);
+  const [cameraIsOpen, setCameraIsOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -48,6 +50,14 @@ const Job = function () {
     func(event.target.value);
   };
 
+  const handleFile = () => {
+    //send file to db then request job with new url added to attachements
+  };
+
+  const handleCapture = () => {
+    //send file to db then request job with new url added to attachements
+  };
+
   const updateJob = () => {
     const tempJob = job;
     tempJob.title = title;
@@ -57,7 +67,9 @@ const Job = function () {
     setJob(tempJob);
   };
 
-  return (
+  return cameraIsOpen ? (
+    <WebcamCapture setCameraIsOpen={setCameraIsOpen} handleCapture={handleCapture} />
+  ) : (
     <div className="Job">
       <textarea
         className="Job__text-area title"
@@ -95,9 +107,15 @@ const Job = function () {
 
       <MaterialsList />
 
-      <div className="Job__attachment-icons__row">
-        <FaCamera className="Job__attachment-icons" />
-        <FaImage className="Job__attachment-icons" />
+      <div className="Job__attachment-buttons__row">
+        <FaCamera className="Job__attachment-icons" onClick={() => setCameraIsOpen(true)} />
+
+        <div>
+          <label onChange={handleFile} htmlFor="formId">
+            <input name="" type="file" id="formId" hidden />
+            <FaImage className="Job__attachment-icons" />
+          </label>
+        </div>
       </div>
 
       <ul className="Job__attachments">

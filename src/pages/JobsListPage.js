@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import JobForm from '../components/forms/JobForm';
+import databaseService from '../services/firestore';
 import JobPage from './JobPage';
 import './JobsListPage.css';
 
 function JobsList() {
   const [jobs, setJobs] = useState([]);
+
+  useEffect(async () => {
+    const dbJobs = await databaseService.getJobs();
+    console.log(dbJobs);
+    setJobs(dbJobs);
+  }, []);
 
   const addJob = (job) => {
     if (!job.text || /^\s*$/.test(job.text)) {
@@ -12,8 +19,9 @@ function JobsList() {
     }
 
     const newJobs = [job, ...jobs];
-
     setJobs(newJobs);
+
+    databaseService.addJob(job.text);
   };
 
   const removeJob = (id) => {
