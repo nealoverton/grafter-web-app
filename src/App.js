@@ -8,6 +8,7 @@ import Nav from './components/layout/Navbar';
 import Job from './pages/Job';
 import { AuthProvider } from './contexts/AuthContext';
 import MaterialsList from './pages/MaterialsList';
+import PrivateRoute from './components/routing/PrivateRoute';
 
 function App() {
   return (
@@ -15,13 +16,49 @@ function App() {
       <AuthProvider>
         <Nav />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/jobs" element={<JobsList />} />
-          <Route path="/job" element={<Job />} />
-          <Route path="/materials" element={<MaterialsList />} />
+          <Route
+            path="/calendar"
+            element={
+              <PrivateRoute>
+                <Calendar />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/jobs"
+            element={
+              <PrivateRoute>
+                <JobsList />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/job"
+            element={
+              <PrivateRoute>
+                <Job />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/materials"
+            element={
+              <PrivateRoute>
+                <MaterialsList />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </AuthProvider>
     </Router>
