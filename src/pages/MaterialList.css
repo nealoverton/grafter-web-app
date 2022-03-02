@@ -105,6 +105,10 @@ td {
   font-size: 1.5em;
 }
 
+td {
+  padding-left: 6%;
+}
+
 table {
   width: 100%;
 }
@@ -155,6 +159,6 @@ table {
   justify-content: center;
 }
 
-/* .actionBtn__tableData__materialList {
-
-} */
+.emptyMsg__materialsList {
+  padding-top: 4%;
+}

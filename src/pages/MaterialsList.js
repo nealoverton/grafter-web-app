@@ -30,7 +30,6 @@ const MaterialsList = function (props) {
   const [isLoading, setIsLoading] = useState(false);
   const [hasChanged, setHasChanged] = useState(false);
 
-  // jobId placeholder - need to change to useParams()
   const { jobId } = props;
 
   // getMaterials - GET request to firestore
