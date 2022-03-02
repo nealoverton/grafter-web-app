@@ -95,11 +95,9 @@ h1 {
 
 h2 {
   font-size: 2em;
-  /* margin: 5% 5%;
-  padding-left: 8vw;
-   */
   display: flex;
   justify-content: center;
+  margin-bottom: 5%;
 }
 
 th,

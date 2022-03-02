@@ -28,6 +28,7 @@ const MaterialsList = function (props) {
 
   const [empty, setEmpty] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasChanged, setHasChanged] = useState(false);
 
   // jobId placeholder - need to change to useParams()
   const { jobId } = props;
@@ -38,8 +39,9 @@ const MaterialsList = function (props) {
     databaseService.getMaterials(jobId).then((materialsInfo) => {
       setMaterials(materialsInfo);
       setIsLoading(false);
+      setHasChanged(false);
     });
-  }, []);
+  }, [hasChanged]);
 
   useEffect(() => {
     if (materials.length > 0) {
@@ -63,14 +65,16 @@ const MaterialsList = function (props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const materialList = { materialName, unit, price };
-    setMaterials([...materials, materialList]);
+    // const materialList = { materialName, unit, price };
+    // setMaterials([...materials, materialList]);
     setMaterialName('');
     setUnit('');
     setPrice('');
 
     // Make POST request to firebase
-    databaseService.addMaterial(jobId, materialName, unit, price);
+    databaseService.addMaterial(jobId, materialName, unit, price).then(() => {
+      setHasChanged(true);
+    });
   };
 
   const handleEditFormChange = (e) => {
@@ -95,22 +99,27 @@ const MaterialsList = function (props) {
       id: editMaterialId
     };
 
+    console.log(editedMaterial);
+
     const newMaterials = [...materials];
 
     const index = materials.findIndex((material) => material.id === editMaterialId);
 
     newMaterials[index] = editedMaterial;
 
-    setMaterials(newMaterials);
-    setEditMaterialId(null);
+    // setMaterials(newMaterials);
 
     // updateMaterial - PATCH request to firestore
-    databaseService.updateMaterial(jobId, editMaterialId, editedMaterial);
+    databaseService.updateMaterial(jobId, editMaterialId, editedMaterial).then(() => {
+      setHasChanged(true);
+    });
+    setEditMaterialId(null);
   };
 
   const handleEditClick = (e, material) => {
     e.preventDefault();
     setEditMaterialId(material.id);
+    console.log(material, 'handleEditClick');
 
     const formValues = {
       materialName: material.materialName,
@@ -132,14 +141,19 @@ const MaterialsList = function (props) {
 
     newMaterials.splice(index, 1);
 
-    setMaterials(newMaterials);
+    // setMaterials(newMaterials);
 
-    databaseService.deleteMaterial(jobId, materialId);
+    console.log(materialId, '<<<delete');
+    databaseService.deleteMaterial(jobId, materialId).then(() => {
+      setHasChanged(true);
+    });
   };
 
   const errorMessage = (
     <tr>
-      <th className="emptyMsg__materialsList">Please enter a material</th>
+      <th colSpan="4" className="emptyMsg__materialsList">
+        Please enter a material
+      </th>
     </tr>
   );
 
