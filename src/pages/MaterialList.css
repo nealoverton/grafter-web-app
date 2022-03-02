@@ -47,6 +47,8 @@ ul {
 
 .calculator__materialsList {
   padding: 5%;
+  display: flex;
+  justify-content: center;
 }
 
 .calculator__materialsList p {
@@ -81,29 +83,34 @@ ul {
   text-decoration: none;
   background-color: var(--color-primary-blue-dark);
   color: var(--color-grey-light-1);
-  margin-top: 10%;
-  margin-bottom: 15%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 h1 {
   font-size: 3.5em;
-  padding-top: 2vh;
+  display: flex;
+  justify-content: center;
 }
 
 h2 {
   font-size: 2em;
-  margin: 5% 5%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5%;
 }
 
 th,
 td {
   font-size: 1.5em;
-  padding: 3%;
 }
 
-.totalPrice__materialList {
-  margin-left: 10%;
-  margin-bottom: 8%;
+td {
+  padding-left: 6%;
+}
+
+table {
+  width: 100%;
 }
 
 .actionBtn__materialList {
@@ -145,4 +152,13 @@ td {
 .tableInput__materialList {
   font-size: 1em;
   width: 20vw;
+}
+
+.btn__materialList {
+  display: flex;
+  justify-content: center;
+}
+
+.emptyMsg__materialsList {
+  padding-top: 4%;
 }

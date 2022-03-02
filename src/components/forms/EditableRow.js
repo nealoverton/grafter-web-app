@@ -34,7 +34,7 @@ const EditableRow = function ({ editFormData, handleEditFormChange, handleCancel
           onChange={handleEditFormChange}
         />
       </td>
-      <td>
+      <td className="actionBtn__tableData__materialList">
         <button type="submit" className="actionBtn__materialList btnSmall">
           Save
         </button>
