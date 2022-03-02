@@ -53,7 +53,7 @@ const MaterialsList = function () {
 
   // eslint-disable-next-line no-unused-vars
   const calculatePrice = materials.forEach((material) => {
-    const convertToNum = Number(material.price);
+    const convertToNum = Number(material.price * material.unit);
     count += convertToNum;
   });
 
