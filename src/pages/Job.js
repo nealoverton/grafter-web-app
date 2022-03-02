@@ -46,6 +46,7 @@ const Job = function () {
   const [postcode, setPostcode] = useState('');
   const [attachments, setAttachments] = useState([]);
   const [cameraIsOpen, setCameraIsOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     window.scrollTo(0, 0);
@@ -63,6 +64,21 @@ const Job = function () {
     setAttachments(dbJobImages);
   }, []);
 
+  useEffect(() => {
+    const imageTimout = () => {
+      databaseService
+        .getImages(jobId)
+        .then((dbJobImages) => {
+          setAttachments(dbJobImages);
+        })
+        .then(() => {
+          setLoading(false);
+        });
+    };
+    // to account for time needed for image to be uploaded to cloud
+    setTimeout(imageTimout, 2000);
+  }, [loading]);
+
   const handleChange = (event, func) => {
     event.target.style.height = 'inherit';
     event.target.style.height = `${event.target.scrollHeight}px`;
@@ -78,6 +94,8 @@ const Job = function () {
       const dbJobImages = await databaseService.getImages(jobId);
 
       await setAttachments(dbJobImages);
+      setLoading(true);
+      console.log(attachments);
     } catch (err) {
       console.log(err);
     }
@@ -87,6 +105,7 @@ const Job = function () {
     try {
       await databaseService.uploadImage(jobId, file);
       const dbJobImages = await databaseService.getImages(jobId);
+
       await setAttachments(dbJobImages);
     } catch (err) {
       console.log(err);
