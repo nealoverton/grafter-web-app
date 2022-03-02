@@ -33,9 +33,9 @@ const Nav = function () {
       <FaUserAlt className="Nav__user-icon" onClick={() => setDropdownOpen(!dropdownOpen)} />
       <div className={dropdownOpen ? 'Nav__dropdown' : 'Nav__dropdown hidden'}>
         <p>{currentUser.email}</p>
-        <button type="button" onClick={() => setDropdownOpen(false)}>
-          My Account
-        </button>
+
+        <Link to="/user"> My Account </Link>
+
         <button type="button" onClick={handleLogout}>
           Logout
         </button>

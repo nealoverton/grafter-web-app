@@ -3,7 +3,8 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  updatePassword
 } from 'firebase/auth';
 import { useContext, createContext, useState, useEffect } from 'react';
 import { auth } from '../services/firebase';
@@ -30,6 +31,10 @@ export function AuthProvider({ children }) {
     return signOut(auth);
   }
 
+  function updateUserPassword(password) {
+    return updatePassword(auth.currentUser, password);
+  }
+
   function resetPassword(email) {
     return sendPasswordResetEmail(auth, email);
   }
@@ -42,7 +47,7 @@ export function AuthProvider({ children }) {
 
     return unsubscribe;
   }, []);
-  const value = { currentUser, signup, login, logout, resetPassword };
+  const value = { currentUser, signup, login, logout, resetPassword, updateUserPassword };
 
   return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
 }

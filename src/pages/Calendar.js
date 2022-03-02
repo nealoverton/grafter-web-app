@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import databaseService from '../services/firestore';
+import Footer from '../components/layout/Footer';
 
 export const reactCalendar = function () {
   const [job, setJob] = useState([]);
@@ -23,9 +24,12 @@ export const reactCalendar = function () {
   }, []);
 
   return (
-    <div>
-      <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" weekends events={job} />
-    </div>
+    <>
+      <div>
+        <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" weekends events={job} />
+      </div>
+      <Footer />
+    </>
   );
 };
 export default reactCalendar;

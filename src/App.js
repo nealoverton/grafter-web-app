@@ -6,17 +6,18 @@ import Signup from './pages/Signup';
 import JobsList from './pages/JobsListPage';
 import Nav from './components/layout/Navbar';
 import Job from './pages/Job';
+// eslint-disable-next-line no-unused-vars
 import BackButton from './components/routing/BackButton';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/routing/PrivateRoute';
 import ForgotPassword from './pages/ForgotPassword';
+import UpdateProfile from './pages/UpdateProfile';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Nav />
-        <BackButton />
         <Routes>
           <Route
             exact
@@ -24,6 +25,15 @@ function App() {
             element={
               <PrivateRoute>
                 <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path="/user"
+            element={
+              <PrivateRoute>
+                <UpdateProfile />
               </PrivateRoute>
             }
           />

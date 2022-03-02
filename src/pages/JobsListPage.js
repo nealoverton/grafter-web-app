@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import JobForm from '../components/forms/JobForm';
+import Footer from '../components/layout/Footer';
 import databaseService from '../services/firestore';
 import JobPage from './JobPage';
 import './JobsListPage.css';
@@ -51,11 +52,20 @@ function JobsList() {
   };
 
   return (
-    <div className="jobs-list">
-      <h1>Live Jobs</h1>
-      <JobForm onSubmit={addJob} />
-      <JobPage jobs={jobs} completeJob={completeJob} removeJob={removeJob} updateJob={updateJob} />
-    </div>
+    <>
+      {' '}
+      <div className="jobs-list">
+        <h1>Live Jobs</h1>
+        <JobForm onSubmit={addJob} />
+        <JobPage
+          jobs={jobs}
+          completeJob={completeJob}
+          removeJob={removeJob}
+          updateJob={updateJob}
+        />
+      </div>
+      <Footer />
+    </>
   );
 }
 
