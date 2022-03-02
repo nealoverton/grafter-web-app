@@ -12,7 +12,7 @@ import ReadOnlyRow from '../components/forms/ReadOnlyRow';
 import databaseService from '../services/firestore';
 import './MaterialList.css';
 
-const MaterialsList = function () {
+const MaterialsList = function (props) {
   const [materialName, setMaterialName] = useState('');
   const [unit, setUnit] = useState('');
   const [price, setPrice] = useState('');
@@ -30,7 +30,7 @@ const MaterialsList = function () {
   const [isLoading, setIsLoading] = useState(false);
 
   // jobId placeholder - need to change to useParams()
-  const jobId = 'yvBkjnyBVPXdQDOUa1Ic';
+  const { jobId } = props;
 
   // getMaterials - GET request to firestore
   useEffect(() => {
@@ -115,7 +115,8 @@ const MaterialsList = function () {
     const formValues = {
       materialName: material.materialName,
       unit: material.unit,
-      price: material.price
+      price: material.price,
+      id: material.id
     };
     setEditFormData(formValues);
   };
@@ -138,7 +139,7 @@ const MaterialsList = function () {
 
   const errorMessage = (
     <tr>
-      <th>Please enter a material</th>
+      <th className="emptyMsg__materialsList">Please enter a material</th>
     </tr>
   );
 
@@ -148,8 +149,7 @@ const MaterialsList = function () {
 
   return (
     <div className="container__MaterialsList">
-      <h1>Materials List</h1>
-      <h2>Job placeholder</h2>
+      <h1>Materials</h1>
       {/* materials state, iterate through that the return price etc */}
       {/* check if someone is 0 if 0 put basic field in there, otherwise pop with mat */}
       <div className="table__materialsList">
@@ -194,6 +194,7 @@ const MaterialsList = function () {
 
       <div className="form__container__materialsList">
         <h2>Add new Materials</h2>
+
         {/* Put labels in */}
         <form onSubmit={handleSubmit} className="form__materialsList">
           {/* Populate material list don't mutate the state,once subitted, clear the state   */}
