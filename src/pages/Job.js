@@ -42,6 +42,7 @@ const Job = function () {
   const [address, setAddress] = useState('');
   const [attachments, setAttachments] = useState([]);
   const [cameraIsOpen, setCameraIsOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     window.scrollTo(0, 0);
@@ -55,6 +56,21 @@ const Job = function () {
     const dbJobImages = await databaseService.getImages(jobId);
     setAttachments(dbJobImages);
   }, []);
+
+  useEffect(() => {
+    const imageTimout = () => {
+      databaseService
+        .getImages(jobId)
+        .then((dbJobImages) => {
+          setAttachments(dbJobImages);
+        })
+        .then(() => {
+          setLoading(false);
+        });
+    };
+    // to account for time needed for image to be uploaded to cloud
+    setTimeout(imageTimout, 2000);
+  }, [loading]);
 
   const handleChange = (event, func) => {
     event.target.style.height = 'inherit';
@@ -75,6 +91,7 @@ const Job = function () {
       const dbJobImages = await databaseService.getImages(jobId);
       console.log(dbJobImages);
       await setAttachments(dbJobImages);
+      setLoading(true);
       console.log(attachments);
     } catch (err) {
       console.log(err);
@@ -82,12 +99,11 @@ const Job = function () {
   };
 
   const handleCapture = async (file) => {
-    console.log(file);
     //send file to db then request job with new url added to attachements
     try {
       await databaseService.uploadImage(jobId, file);
       const dbJobImages = await databaseService.getImages(jobId);
-      console.log(dbJobImages);
+
       await setAttachments(dbJobImages);
       console.log(attachments);
     } catch (err) {
