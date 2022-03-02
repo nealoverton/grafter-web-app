@@ -6,6 +6,7 @@ import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
 import databaseService from '../services/firestore';
 import { Attachment } from './Attachment';
+import Footer from '../components/layout/Footer';
 
 const Job = function () {
   const { jobId } = useParams();
@@ -118,7 +119,6 @@ const Job = function () {
       >
         {job.title}
       </textarea>
-
       <div className="Job__address-container">
         <p className="Job__address__hint">Address:</p>
         <input
@@ -153,7 +153,6 @@ const Job = function () {
           />
         </label>
       </div>
-
       <div className="Job__calendar-row">
         <p className="dates">
           <FaCalendarAlt />
@@ -170,9 +169,7 @@ const Job = function () {
       >
         {job.notes}
       </textarea>
-
       <MaterialsList jobId={jobId} />
-
       <div className="Job__attachment-buttons__row">
         <div className="Job__attachment-icons__container">
           <FaCamera className="Job__attachment-icons" onClick={() => setCameraIsOpen(true)} />
@@ -184,7 +181,6 @@ const Job = function () {
           </label>
         </div>
       </div>
-
       <ul className="Job__attachments">
         {attachments.map((attachment, index) => (
           <Attachment
@@ -195,6 +191,7 @@ const Job = function () {
           />
         ))}
       </ul>
+      <Footer onJobPage={true} />
     </div>
   );
 };
