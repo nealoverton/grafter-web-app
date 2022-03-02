@@ -10,7 +10,7 @@
   align-items: center;
 }
 
-.Webcam__view {
+.Webcam__centered-image {
   position: fixed;
   top: 0px;
 }
@@ -31,4 +31,26 @@
   position: fixed;
   bottom: 10vh;
   left: 40vw;
+}
+
+.Webcam__save-photo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+  width: 80vw;
+  height: 20vw;
+  position: fixed;
+  bottom: 10vh;
+  left: 10vw;
+}
+
+.Webcam__save-photo__icon {
+  width: 20vw;
+  height: 20vw;
+}
+
+.Webcam__save-photo__text {
+  text-align: center;
+  font-size: 25px;
 }
