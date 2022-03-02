@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { FaCalendarAlt, FaCamera, FaImage, FaTimes } from 'react-icons/fa';
-import MaterialsList from './MaterialsList';
+import { useParams, useNavigate } from 'react-router-dom';
+import { FaCalendarAlt, FaCamera, FaImage } from 'react-icons/fa';
+// import MaterialsList from './MaterialsList';
 import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
 import databaseService from '../services/firestore';
+import { Attachment } from './Attachment';
 
 const Job = function () {
   const testJob = {
@@ -37,6 +38,7 @@ const Job = function () {
 
   const [job, setJob] = useState(testJob);
   const { jobId } = useParams();
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [notes, setNotes] = useState('');
   // const [address, setAddress] = useState('');
@@ -44,6 +46,7 @@ const Job = function () {
   const [secondAddressLine, setSecondAddressLine] = useState('');
   const [thirdAddressLine, setThirdAddressLine] = useState('');
   const [postcode, setPostcode] = useState('');
+  const [materials, setMaterials] = useState([]);
   const [attachments, setAttachments] = useState([]);
   const [cameraIsOpen, setCameraIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -51,7 +54,8 @@ const Job = function () {
   useEffect(async () => {
     window.scrollTo(0, 0);
     const dbJob = await databaseService.getJob(jobId);
-    console.log(dbJob);
+    const jobMaterials = await databaseService.getMaterials(jobId);
+
     setJob(dbJob);
     setTitle(dbJob.name);
     setNotes(dbJob.jobNotes);
@@ -59,6 +63,7 @@ const Job = function () {
     setSecondAddressLine(dbJob.secondAddressLine);
     setThirdAddressLine(dbJob.thirdAddressLine);
     setPostcode(dbJob.postcode);
+    setMaterials(jobMaterials);
 
     const dbJobImages = await databaseService.getImages(jobId);
     setAttachments(dbJobImages);
@@ -107,6 +112,7 @@ const Job = function () {
       const dbJobImages = await databaseService.getImages(jobId);
 
       await setAttachments(dbJobImages);
+      setLoading(true);
     } catch (err) {
       console.log(err);
     }
@@ -115,7 +121,7 @@ const Job = function () {
   const deleteAttachment = async (index) => {
     databaseService.deleteImage(jobId, attachments[index].name, attachments[index].id);
     const newAttachments = [...attachments];
-    newAttachments.splice(index);
+    newAttachments.splice(index, 1);
     setAttachments(newAttachments);
   };
 
@@ -175,16 +181,6 @@ const Job = function () {
         />
       </div>
 
-      {/* <div className="Job__address-row">
-        <textarea
-          className="Job__text-area address"
-          value={address}
-          onChange={(e) => handleChange(e, setAddress)}
-          onBlur={updateJob}
-        >
-          {job.address}
-        </textarea>
-      </div> */}
       <div className="Job__calendar-row">
         <p className="dates">
           <FaCalendarAlt />
@@ -202,7 +198,17 @@ const Job = function () {
         {job.notes}
       </textarea>
 
-      <MaterialsList jobId={jobId} />
+      {materials.map((material) => (
+        <p key={material.name}>{material.name}</p>
+      ))}
+
+      <button
+        className="Job__materials-button"
+        type="button"
+        onClick={() => navigate(`/jobs/${jobId}/materials`)}
+      >
+        Add/remove materials
+      </button>
 
       <div className="Job__attachment-buttons__row">
         <FaCamera className="Job__attachment-icons" onClick={() => setCameraIsOpen(true)} />
@@ -215,13 +221,7 @@ const Job = function () {
 
       <ul className="Job__attachments">
         {attachments.map((attachment, index) => (
-          <li key={attachment.url} className="Job__attachments__container">
-            <img src={attachment.url} alt="Attached job info" className="Job__attachments__img" />
-            <FaTimes
-              className="Job__attachments__delete-icon"
-              onClick={() => deleteAttachment(index)}
-            />
-          </li>
+          <Attachment attachment={attachment} deleteAttachment={deleteAttachment} index={index} />
         ))}
       </ul>
     </div>
