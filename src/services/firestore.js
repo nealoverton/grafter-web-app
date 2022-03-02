@@ -206,8 +206,7 @@ const databaseService = {
   deleteMaterial,
   uploadImage,
   getImages,
-  deleteImage,
-  addJobDEV
+  deleteImage
 };
 
 export default databaseService;
