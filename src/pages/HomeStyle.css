@@ -20,9 +20,11 @@
 }
 
 .homePage__buttons {
+  padding-top: 10vh;
   align-items: center;
   display: flex;
   justify-content: space-between;
+  height: 70vh;
   flex-direction: column;
 }
 

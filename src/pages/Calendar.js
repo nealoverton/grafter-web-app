@@ -9,12 +9,10 @@ export const reactCalendar = function () {
 
   useEffect(() => {
     databaseService.getJobs('EBRklWxRHARgMY3PADB7omUiLuC2').then((jobsFromFirestore) => {
-      console.log(jobsFromFirestore, '<<<<');
-
       if (jobsFromFirestore.length > 0) {
         const newJob = [
           {
-            title: `${jobsFromFirestore['0'].name} ${jobsFromFirestore['1'].firstAddressLine} ${jobsFromFirestore['1'].postcode} `,
+            title: `TITLE: ${jobsFromFirestore['0'].name} ADDRESS: ${jobsFromFirestore['1'].firstAddressLine} ${jobsFromFirestore['1'].postcode} `,
 
             start: `${jobsFromFirestore['0'].jobStartDate}`,
             end: `${jobsFromFirestore['0'].jobEndDate}`
