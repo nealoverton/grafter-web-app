@@ -82,7 +82,7 @@ const Job = function () {
   };
 
   const handleCapture = async (file) => {
-    console.log(file);
+    console.log(file.toString().slice(23));
     //send file to db then request job with new url added to attachements
     try {
       await databaseService.uploadImage(jobId, file);
