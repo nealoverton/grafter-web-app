@@ -9,6 +9,7 @@ import Job from './pages/Job';
 import { AuthProvider } from './contexts/AuthContext';
 import MaterialsList from './pages/MaterialsList';
 import PrivateRoute from './components/routing/PrivateRoute';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="/calendar"
             element={
@@ -52,7 +54,7 @@ function App() {
             }
           />
           <Route
-            path="/materials"
+            path="/jobs/:jobId/materials"
             element={
               <PrivateRoute>
                 <MaterialsList />

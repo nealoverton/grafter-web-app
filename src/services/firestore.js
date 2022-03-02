@@ -33,7 +33,6 @@ const addJob = async (
   postcode = '352 posty',
   estimate = 0,
   jobStartDate = '',
-
   jobEndDate = '',
   isLive = true,
   isComplete = false,
@@ -207,7 +206,8 @@ const databaseService = {
   deleteMaterial,
   uploadImage,
   getImages,
-  deleteImage
+  deleteImage,
+  addJobDEV
 };
 
 export default databaseService;

@@ -6,12 +6,14 @@ import './JobsListPage.css';
 
 function JobsList() {
   const [jobs, setJobs] = useState([]);
+  const [loadingJobs, setLoadingJobs] = useState(false);
 
   useEffect(async () => {
     const dbJobs = await databaseService.getJobs();
-    console.log(dbJobs);
-    setJobs(dbJobs);
-  }, []);
+
+    setJobs([...dbJobs]);
+    setLoadingJobs(false);
+  }, [loadingJobs]);
 
   const addJob = (job) => {
     if (!job.text || /^\s*$/.test(job.text)) {
@@ -22,19 +24,20 @@ function JobsList() {
     setJobs(newJobs);
 
     databaseService.addJob(job.text);
+    setLoadingJobs(true);
   };
 
   const removeJob = (id) => {
-    const removeArr = [...jobs].filter((job) => job.id !== id);
-
-    setJobs(removeArr);
+    databaseService.deleteJob(id);
+    setLoadingJobs(true);
   };
 
   const updateJob = (jobId, newValue) => {
     if (!newValue.text || /^\s*$/.test(newValue.text)) {
       return;
     }
-    setJobs((prev) => prev.map((item) => (item.id === jobId ? newValue : item)));
+    databaseService.updateJob(jobId, { name: newValue.text });
+    setLoadingJobs(true);
   };
 
   const completeJob = (id) => {
