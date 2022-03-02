@@ -5,7 +5,6 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import JobsList from './pages/JobsListPage';
 import Nav from './components/layout/Navbar';
-import Job from './pages/Job';
 import { AuthProvider } from './contexts/AuthContext';
 import MaterialsList from './pages/MaterialsList';
 import PrivateRoute from './components/routing/PrivateRoute';

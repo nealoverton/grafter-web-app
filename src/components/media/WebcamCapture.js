@@ -1,5 +1,6 @@
 import Webcam from 'react-webcam';
 import React, { useState } from 'react';
+import uuid from 'react-uuid';
 import { FaArrowCircleLeft, FaCircle, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import './Webcam.css';
 
@@ -19,7 +20,14 @@ export const WebcamCapture = function ({ handleCapture, setCameraIsOpen }) {
   }, [webcamRef]);
 
   const handleImageChoice = (isSaved = false) => {
-    if (isSaved) handleCapture(image);
+    if (isSaved) {
+      fetch(image)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = new File([blob], uuid(), { type: 'image/png' });
+          handleCapture(file);
+        });
+    }
 
     setImage(null);
   };
