@@ -1,0 +1,44 @@
+.fullscreen {
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 3;
+  top: 0px;
+  object-fit: contain;
+}
+
+.Attachment__container {
+  position: relative;
+  margin: 10px;
+}
+
+.Attachment__button {
+  all: unset;
+  height: 25vw;
+  width: 25vw;
+  max-width: 200px;
+  max-height: 200px;
+
+  border-radius: 10px;
+}
+
+.Attachment__img {
+  height: 25vw;
+  width: 25vw;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+
+  border-radius: 10px;
+}
+
+.Attachment__delete-icon {
+  z-index: 2;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 15px;
+  height: 15px;
+  color: black;
+}
