@@ -114,3 +114,17 @@
   height: 15px;
   color: black;
 }
+
+.Job__address-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.Job__address__input {
+  all: unset;
+  margin: 5px;
+  width: 80vw;
+  background-color: azure;
+  text-align: center;
+}

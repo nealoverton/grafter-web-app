@@ -39,7 +39,11 @@ const Job = function () {
   const { jobId } = useParams();
   const [title, setTitle] = useState('');
   const [notes, setNotes] = useState('');
-  const [address, setAddress] = useState('');
+  // const [address, setAddress] = useState('');
+  const [firstAddressLine, setfirstAddressLine] = useState('');
+  const [secondAddressLine, setSecondAddressLine] = useState('');
+  const [thirdAddressLine, setThirdAddressLine] = useState('');
+  const [postcode, setPostcode] = useState('');
   const [attachments, setAttachments] = useState([]);
   const [cameraIsOpen, setCameraIsOpen] = useState(false);
 
@@ -50,7 +54,10 @@ const Job = function () {
     setJob(dbJob);
     setTitle(dbJob.name);
     setNotes(dbJob.jobNotes);
-    setAddress(dbJob.firstAddressLine);
+    setfirstAddressLine(dbJob.firstAddressLine);
+    setSecondAddressLine(dbJob.secondAddressLine);
+    setThirdAddressLine(dbJob.thirdAddressLine);
+    setPostcode(dbJob.postcode);
 
     const dbJobImages = await databaseService.getImages(jobId);
     setAttachments(dbJobImages);
@@ -96,7 +103,10 @@ const Job = function () {
   const updateJob = () => {
     const tempJob = job;
     tempJob.name = title;
-    tempJob.firstAddressLine = address;
+    tempJob.firstAddressLine = firstAddressLine;
+    tempJob.secondAddressLine = secondAddressLine;
+    tempJob.thirdAddressLine = thirdAddressLine;
+    tempJob.postcode = postcode;
     tempJob.jobNotes = notes;
 
     databaseService.updateJob(jobId, tempJob);
@@ -115,7 +125,38 @@ const Job = function () {
         {job.title}
       </textarea>
 
-      <div className="Job__address-row">
+      <div className="Job__address-container">
+        <input
+          className="Job__address__input"
+          type="text"
+          value={firstAddressLine}
+          onChange={(e) => handleChange(e, setfirstAddressLine)}
+          onBlur={updateJob}
+        />
+        <input
+          className="Job__address__input"
+          type="text"
+          value={secondAddressLine}
+          onChange={(e) => handleChange(e, setSecondAddressLine)}
+          onBlur={updateJob}
+        />
+        <input
+          className="Job__address__input"
+          type="text"
+          value={thirdAddressLine}
+          onChange={(e) => handleChange(e, setThirdAddressLine)}
+          onBlur={updateJob}
+        />
+        <input
+          className="Job__address__input"
+          type="text"
+          value={postcode}
+          onChange={(e) => handleChange(e, setPostcode)}
+          onBlur={updateJob}
+        />
+      </div>
+
+      {/* <div className="Job__address-row">
         <textarea
           className="Job__text-area address"
           value={address}
@@ -124,11 +165,13 @@ const Job = function () {
         >
           {job.address}
         </textarea>
-      </div>
+      </div> */}
       <div className="Job__calendar-row">
         <p className="dates">
           <FaCalendarAlt />
-          {`${job.startDate} - ${job.endDate}`}
+          {`${job.startDate ? job.startDate : 'Pick a start date'} - ${
+            job.endDate ? job.endDate : 'Pick an end date'
+          }`}
         </p>
       </div>
       <textarea
