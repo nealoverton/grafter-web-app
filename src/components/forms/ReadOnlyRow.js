@@ -4,7 +4,7 @@ const ReadOnlyRow = function ({ item, handleEditClick, handleDeleteClick }) {
       <td>{item.materialName}</td>
       <td>{item.unit}</td>
       <td>{item.price}</td>
-      <td>
+      <td className="actionBtn__tableData__materialList">
         <button
           type="button"
           onClick={(e) => handleEditClick(e, item)}

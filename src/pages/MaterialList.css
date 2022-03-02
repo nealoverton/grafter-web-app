@@ -1,6 +1,6 @@
-* {
+/* * {
   border: solid 1px red;
-}
+} */
 
 ul {
   list-style: none;
@@ -83,8 +83,8 @@ ul {
   text-decoration: none;
   background-color: var(--color-primary-blue-dark);
   color: var(--color-grey-light-1);
-  margin-top: 10%;
-  margin-bottom: 15%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 h1 {
@@ -105,7 +105,10 @@ h2 {
 th,
 td {
   font-size: 1.5em;
-  padding: 3%;
+}
+
+table {
+  width: 100%;
 }
 
 .actionBtn__materialList {
@@ -153,3 +156,7 @@ td {
   display: flex;
   justify-content: center;
 }
+
+/* .actionBtn__tableData__materialList {
+
+} */
