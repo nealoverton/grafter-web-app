@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FaCalendarAlt, FaCamera, FaImage } from 'react-icons/fa';
+import { FaCalendarAlt, FaCamera, FaImage, FaTimes } from 'react-icons/fa';
 import MaterialsList from './MaterialsList';
 import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
@@ -63,36 +63,34 @@ const Job = function () {
   };
 
   const handleFile = async (e) => {
-    //send file to db then request job with new url added to attachements
-    // databaseService.uploadImage(jobId, file);
-
-    console.log('handling file');
     const file = e.target.files[0];
     if (e === null) return;
 
     try {
       await databaseService.uploadImage(jobId, file);
       const dbJobImages = await databaseService.getImages(jobId);
-      console.log(dbJobImages);
+
       await setAttachments(dbJobImages);
-      console.log(attachments);
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleCapture = async (file) => {
-    console.log(file.toString().slice(23));
-    //send file to db then request job with new url added to attachements
     try {
       await databaseService.uploadImage(jobId, file);
       const dbJobImages = await databaseService.getImages(jobId);
-      console.log(dbJobImages);
       await setAttachments(dbJobImages);
-      console.log(attachments);
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const deleteAttachment = async (index) => {
+    databaseService.deleteImage(jobId, attachments[index].name, attachments[index].id);
+    const newAttachments = [...attachments];
+    newAttachments.splice(index);
+    setAttachments(newAttachments);
   };
 
   const updateJob = () => {
@@ -154,9 +152,13 @@ const Job = function () {
       </div>
 
       <ul className="Job__attachments">
-        {attachments.map((attachment) => (
-          <li key={attachment.url}>
-            <img src={attachment.url} alt="Attached job info" className="Job__img" />
+        {attachments.map((attachment, index) => (
+          <li key={attachment.url} className="Job__attachments__container">
+            <img src={attachment.url} alt="Attached job info" className="Job__attachments__img" />
+            <FaTimes
+              className="Job__attachments__delete-icon"
+              onClick={() => deleteAttachment(index)}
+            />
           </li>
         ))}
       </ul>

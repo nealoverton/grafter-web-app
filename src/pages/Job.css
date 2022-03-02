@@ -39,7 +39,7 @@
   justify-content: center;
 }
 
-.Job__img {
+.Job__attachments__img {
   height: 25vw;
   width: 25vw;
   max-width: 200px;
@@ -99,4 +99,18 @@
   width: 50vw;
   justify-content: space-between;
   margin-top: 20px;
+}
+
+.Job__attachments__container {
+  position: relative;
+}
+
+.Job__attachments__delete-icon {
+  z-index: 2;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 15px;
+  height: 15px;
+  color: black;
 }
