@@ -11,6 +11,7 @@ import BackButton from './components/routing/BackButton';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/routing/PrivateRoute';
 import ForgotPassword from './pages/ForgotPassword';
+import UpdateProfile from './pages/UpdateProfile';
 
 function App() {
   return (
@@ -24,6 +25,15 @@ function App() {
             element={
               <PrivateRoute>
                 <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path="/user"
+            element={
+              <PrivateRoute>
+                <UpdateProfile />
               </PrivateRoute>
             }
           />

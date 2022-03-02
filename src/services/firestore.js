@@ -24,6 +24,19 @@ const addUser = async (newuid, name = 'test name', company = 'test company') => 
   return await setDoc(newUserRef, { name, company, userId: newuid });
 };
 
+const getUser = async () => {
+  const userRef = doc(fireStoreDB, 'users', auth.currentUser.uid);
+
+  const userSnapshot = await getDoc(userRef);
+  return userSnapshot.data();
+};
+
+const updateUser = async (data) => {
+  const userRef = doc(fireStoreDB, 'users', auth.currentUser.uid);
+
+  return await updateDoc(userRef, data);
+};
+
 const addJob = async (
   name = 'testJob',
   firstAddressLine = '123 fake street',
@@ -145,7 +158,7 @@ const addImageFile = async (url, name, jobId) => {
 const uploadImage = (jobId, file) => {
   // This fixes bug where image was not always getting uploaded
   const userUid = auth.currentUser.uid;
-  console.log(auth.currentUser);
+
   const filePath = `${userUid}/${jobId}/${file.name}`;
   const storageRef = ref(storage, `files/${filePath}`);
   const uploadTask = uploadBytesResumable(storageRef, file);
@@ -193,6 +206,8 @@ const deleteImage = async (jobId, imageName, imageId) => {
 
 const databaseService = {
   addUser,
+  getUser,
+  updateUser,
   addJob,
   getJobs,
   getJob,
