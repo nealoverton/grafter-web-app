@@ -75,12 +75,18 @@
 }
 
 .title {
-  font-size: 20px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+input[type='text'] {
+  font-size: 14px;
   font-weight: bold;
 }
 
 .address {
-  font-size: 12px;
+  height: 20px;
+  font-size: 30px;
   font-weight: bold;
 }
 
@@ -89,7 +95,19 @@
   font-weight: bold;
 }
 
+.Job__attachment-icons__container {
+  border: 3px solid var(--color-primary-blue-dark);
+  border-radius: 8px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
 .Job__attachment-icons {
+  color: var(--color-primary-blue-dark);
   width: 40px;
   height: 40px;
 }
@@ -118,13 +136,29 @@
 .Job__address-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
+  border: 3px solid var(--color-primary-blue-dark);
+  border-radius: 5px;
+}
+
+.Job__address__hint {
+  width: 100%;
+  text-align: left;
 }
 
 .Job__address__input {
   all: unset;
-  margin: 5px;
-  width: 70vw;
+  margin: 10px;
+  width: 90%;
+  background-color: azure;
+  text-align: center;
+}
+
+.Job__address__input__postcode {
+  all: unset;
+  margin: 10px;
+  width: 60%;
   background-color: azure;
   text-align: center;
 }
