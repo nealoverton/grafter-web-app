@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { RiCloseCircleLine } from 'react-icons/ri';
-import { TiEdit } from 'react-icons/ti';
+import { TiEdit, TiTick } from 'react-icons/ti';
 import JobForm from '../components/forms/JobForm';
 
 function JobPage({ jobs, completeJob, removeJob, updateJob }) {
@@ -24,10 +25,11 @@ function JobPage({ jobs, completeJob, removeJob, updateJob }) {
   return jobs.map((job, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <div className={job.isComplete ? 'job-row complete' : 'job-row'} key={index}>
-      <div key={job.id} onClick={() => completeJob(job.id)} aria-hidden="true">
-        {job.text}
-      </div>
+      <Link to={`/jobs/${job.id}`} className="job-row__name" key={job.id} aria-hidden="true">
+        {job.name}
+      </Link>
       <div className="icons">
+        <TiTick onClick={() => completeJob(job.id)} className="tick-icon" />
         <RiCloseCircleLine onClick={() => removeJob(job.id)} className="delete-icon" />
         <TiEdit onClick={() => setEdit({ id: job.id, value: job.text })} className="edit-icon" />
       </div>

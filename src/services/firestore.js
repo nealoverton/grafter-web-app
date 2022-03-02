@@ -33,9 +33,9 @@ const addJob = async (
   postcode = '352 posty',
   estimate = 0,
   jobStartDate = '',
-
   jobEndDate = '',
   isLive = true,
+  isComplete = false,
   jobNotes = 'blah'
 ) => {
   // get current user file
@@ -52,6 +52,7 @@ const addJob = async (
     jobStartDate,
     jobEndDate,
     isLive,
+    isComplete,
     jobNotes,
     createdAt: getCurrentTimestamp,
     uid: auth.currentUser.uid
@@ -62,7 +63,7 @@ const getJobs = async () => {
 
   const jobsSnapshot = await getDocs(collection(userRef, 'jobs'));
   const jobs = [];
-  console.log(jobsSnapshot);
+
   // iterates through snapshot and pushes job data
   jobsSnapshot.forEach((job) => {
     jobs.push({ id: job.id, ...job.data() });

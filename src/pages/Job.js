@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { FaCalendarAlt, FaCamera, FaImage } from 'react-icons/fa';
 import MaterialsList from './MaterialsList';
+import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
+import databaseService from '../services/firestore';
 
 const Job = function () {
   const testJob = {
@@ -33,14 +36,25 @@ const Job = function () {
   };
 
   const [job, setJob] = useState(testJob);
+  const { jobId } = useParams();
+  const [title, setTitle] = useState('');
+  const [notes, setNotes] = useState('');
+  const [address, setAddress] = useState('');
+  const [attachments, setAttachments] = useState([]);
+  const [cameraIsOpen, setCameraIsOpen] = useState(false);
 
-  const [title, setTitle] = useState(job.title);
-  const [notes, setNotes] = useState(job.notes ? job.notes : null);
-  const [address, setAddress] = useState(job.address ? job.address : null);
-
-  useEffect(() => {
+  useEffect(async () => {
     window.scrollTo(0, 0);
-  });
+    const dbJob = await databaseService.getJob(jobId);
+    console.log(dbJob);
+    setJob(dbJob);
+    setTitle(dbJob.name);
+    setNotes(dbJob.jobNotes);
+    setAddress(dbJob.firstAddressLine);
+
+    const dbJobImages = await databaseService.getImages(jobId);
+    setAttachments(dbJobImages);
+  }, []);
 
   const handleChange = (event, func) => {
     event.target.style.height = 'inherit';
@@ -48,16 +62,51 @@ const Job = function () {
     func(event.target.value);
   };
 
-  const updateJob = () => {
-    const tempJob = job;
-    tempJob.title = title;
-    tempJob.address = address;
-    tempJob.notes = notes;
+  const handleFile = async (e) => {
+    //send file to db then request job with new url added to attachements
+    // databaseService.uploadImage(jobId, file);
 
-    setJob(tempJob);
+    console.log('handling file');
+    const file = e.target.files[0];
+    if (e === null) return;
+
+    try {
+      await databaseService.uploadImage(jobId, file);
+      const dbJobImages = await databaseService.getImages(jobId);
+      console.log(dbJobImages);
+      await setAttachments(dbJobImages);
+      console.log(attachments);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  return (
+  const handleCapture = async (file) => {
+    console.log(file);
+    //send file to db then request job with new url added to attachements
+    try {
+      await databaseService.uploadImage(jobId, file);
+      const dbJobImages = await databaseService.getImages(jobId);
+      console.log(dbJobImages);
+      await setAttachments(dbJobImages);
+      console.log(attachments);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateJob = () => {
+    const tempJob = job;
+    tempJob.name = title;
+    tempJob.firstAddressLine = address;
+    tempJob.jobNotes = notes;
+
+    databaseService.updateJob(jobId, tempJob);
+  };
+
+  return cameraIsOpen ? (
+    <WebcamCapture setCameraIsOpen={setCameraIsOpen} handleCapture={handleCapture} />
+  ) : (
     <div className="Job">
       <textarea
         className="Job__text-area title"
@@ -93,17 +142,21 @@ const Job = function () {
         {job.notes}
       </textarea>
 
-      <MaterialsList />
+      <MaterialsList jobId={jobId} />
 
-      <div className="Job__attachment-icons__row">
-        <FaCamera className="Job__attachment-icons" />
-        <FaImage className="Job__attachment-icons" />
+      <div className="Job__attachment-buttons__row">
+        <FaCamera className="Job__attachment-icons" onClick={() => setCameraIsOpen(true)} />
+
+        <label htmlFor="file-upload">
+          <input name="file-upload" type="file" id="file-upload" onChange={handleFile} hidden />
+          <FaImage className="Job__attachment-icons" />
+        </label>
       </div>
 
       <ul className="Job__attachments">
-        {job.attachments.map((attachment, index) => (
-          <li key={attachment + index.toString()}>
-            <img src={attachment} alt="Attached job info" className="Job__img" />
+        {attachments.map((attachment) => (
+          <li key={attachment.url}>
+            <img src={attachment.url} alt="Attached job info" className="Job__img" />
           </li>
         ))}
       </ul>

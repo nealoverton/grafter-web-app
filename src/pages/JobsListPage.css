@@ -102,11 +102,22 @@ h1 {
   background: linear-gradient(90deg, rgba(20, 159, 255, 1) 0%, rgba(17, 122, 255, 1) 100%);
 }
 
+.job-row__name {
+  width: 100%;
+  text-align: left;
+  color: inherit;
+}
+
 .icons {
   display: flex;
   align-items: center;
   font-size: 24px;
   cursor: pointer;
+}
+
+.tick-icon {
+  margin-right: 5px;
+  color: #fff;
 }
 
 .delete-icon {
