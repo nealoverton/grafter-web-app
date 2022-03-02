@@ -1,0 +1,11 @@
+.backButton__BackButton {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  margin: 10px;
+  padding: 1%;
+  background-color: #212e8f;
+  color: #fff;
+  border-radius: 5px;
+}

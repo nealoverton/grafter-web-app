@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import JobsList from './pages/JobsListPage';
 import Nav from './components/layout/Navbar';
 import Job from './pages/Job';
+import BackButton from './components/routing/BackButton';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/routing/PrivateRoute';
 import ForgotPassword from './pages/ForgotPassword';
@@ -15,6 +16,7 @@ function App() {
     <Router>
       <AuthProvider>
         <Nav />
+        <BackButton />
         <Routes>
           <Route
             exact
