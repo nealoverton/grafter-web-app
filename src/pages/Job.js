@@ -5,8 +5,13 @@ import MaterialsList from './MaterialsList';
 import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
 import databaseService from '../services/firestore';
+<<<<<<< HEAD
 import Attachment from './Attachment';
 import DatePicker from '../components/forms/Datepicker';
+=======
+import { Attachment } from './Attachment';
+import Footer from '../components/layout/Footer';
+>>>>>>> 02e834dd5dbe60feba0e4f31d751e08ee8e8e940
 
 const Job = function () {
   const { jobId } = useParams();
@@ -135,7 +140,6 @@ const Job = function () {
       >
         {title}
       </textarea>
-
       <div className="Job__address-container">
         <p className="Job__address__hint">Address:</p>
         <input
@@ -170,6 +174,7 @@ const Job = function () {
           />
         </label>
       </div>
+<<<<<<< HEAD
 
       {datePickerIsOpen ? (
         <DatePicker
@@ -187,6 +192,16 @@ const Job = function () {
         </div>
       )}
 
+=======
+      <div className="Job__calendar-row">
+        <p className="dates">
+          <FaCalendarAlt />
+          {`${job.startDate ? job.startDate : 'Pick a start date'} - ${
+            job.endDate ? job.endDate : 'Pick an end date'
+          }`}
+        </p>
+      </div>
+>>>>>>> 02e834dd5dbe60feba0e4f31d751e08ee8e8e940
       <textarea
         className="Job__text-area"
         value={notes}
@@ -195,9 +210,7 @@ const Job = function () {
       >
         {notes}
       </textarea>
-
       <MaterialsList jobId={jobId} />
-
       <div className="Job__attachment-buttons__row">
         <div className="Job__attachment-icons__container">
           <FaCamera className="Job__attachment-icons" onClick={() => setCameraIsOpen(true)} />
@@ -209,7 +222,6 @@ const Job = function () {
           </label>
         </div>
       </div>
-
       <ul className="Job__attachments">
         {attachments.map((attachment, index) => (
           <Attachment
@@ -220,6 +232,7 @@ const Job = function () {
           />
         ))}
       </ul>
+      <Footer onJobPage={true} />
     </div>
   );
 };

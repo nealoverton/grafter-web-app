@@ -35,6 +35,7 @@ a,
 a:link,
 a:hover {
   text-decoration: none;
+  color: inherit;
 }
 
 body {

@@ -2,17 +2,6 @@
   text-align: center;
 }
 
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  padding: 2.2vh;
-  text-align: left;
-  background-color: var(--color-primary-blue-dark);
-  color: var(--color-grey-light-1);
-}
-
 .container {
   height: 100vh;
   background-image: url('/src/images/background.jpg');

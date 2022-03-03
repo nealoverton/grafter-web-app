@@ -12,7 +12,7 @@ import ReadOnlyRow from '../components/forms/ReadOnlyRow';
 import databaseService from '../services/firestore';
 import './MaterialList.css';
 
-const MaterialsList = function () {
+const MaterialsList = function (props) {
   const [materialName, setMaterialName] = useState('');
   const [unit, setUnit] = useState('');
   const [price, setPrice] = useState('');
@@ -28,9 +28,9 @@ const MaterialsList = function () {
 
   const [empty, setEmpty] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasChanged, setHasChanged] = useState(false);
 
-  // jobId placeholder - need to change to useParams()
-  const jobId = 'yvBkjnyBVPXdQDOUa1Ic';
+  const { jobId } = props;
 
   // getMaterials - GET request to firestore
   useEffect(() => {
@@ -38,8 +38,9 @@ const MaterialsList = function () {
     databaseService.getMaterials(jobId).then((materialsInfo) => {
       setMaterials(materialsInfo);
       setIsLoading(false);
+      setHasChanged(false);
     });
-  }, []);
+  }, [hasChanged]);
 
   useEffect(() => {
     if (materials.length > 0) {
@@ -63,14 +64,16 @@ const MaterialsList = function () {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const materialList = { materialName, unit, price };
-    setMaterials([...materials, materialList]);
+    // const materialList = { materialName, unit, price };
+    // setMaterials([...materials, materialList]);
     setMaterialName('');
     setUnit('');
     setPrice('');
 
     // Make POST request to firebase
-    databaseService.addMaterial(jobId, materialName, unit, price);
+    databaseService.addMaterial(jobId, materialName, unit, price).then(() => {
+      setHasChanged(true);
+    });
   };
 
   const handleEditFormChange = (e) => {
@@ -95,27 +98,33 @@ const MaterialsList = function () {
       id: editMaterialId
     };
 
+    console.log(editedMaterial);
+
     const newMaterials = [...materials];
 
     const index = materials.findIndex((material) => material.id === editMaterialId);
 
     newMaterials[index] = editedMaterial;
 
-    setMaterials(newMaterials);
-    setEditMaterialId(null);
+    // setMaterials(newMaterials);
 
     // updateMaterial - PATCH request to firestore
-    databaseService.updateMaterial(jobId, editMaterialId, editedMaterial);
+    databaseService.updateMaterial(jobId, editMaterialId, editedMaterial).then(() => {
+      setHasChanged(true);
+    });
+    setEditMaterialId(null);
   };
 
   const handleEditClick = (e, material) => {
     e.preventDefault();
     setEditMaterialId(material.id);
+    console.log(material, 'handleEditClick');
 
     const formValues = {
       materialName: material.materialName,
       unit: material.unit,
-      price: material.price
+      price: material.price,
+      id: material.id
     };
     setEditFormData(formValues);
   };
@@ -131,14 +140,19 @@ const MaterialsList = function () {
 
     newMaterials.splice(index, 1);
 
-    setMaterials(newMaterials);
+    // setMaterials(newMaterials);
 
-    databaseService.deleteMaterial(jobId, materialId);
+    console.log(materialId, '<<<delete');
+    databaseService.deleteMaterial(jobId, materialId).then(() => {
+      setHasChanged(true);
+    });
   };
 
   const errorMessage = (
     <tr>
-      <th>Please enter a material</th>
+      <th colSpan="4" className="emptyMsg__materialsList">
+        Please enter a material
+      </th>
     </tr>
   );
 
@@ -148,8 +162,7 @@ const MaterialsList = function () {
 
   return (
     <div className="container__MaterialsList">
-      <h1>Materials List</h1>
-      <h2>Job placeholder</h2>
+      <h1>Materials</h1>
       {/* materials state, iterate through that the return price etc */}
       {/* check if someone is 0 if 0 put basic field in there, otherwise pop with mat */}
       <div className="table__materialsList">
@@ -194,6 +207,7 @@ const MaterialsList = function () {
 
       <div className="form__container__materialsList">
         <h2>Add new Materials</h2>
+
         {/* Put labels in */}
         <form onSubmit={handleSubmit} className="form__materialsList">
           {/* Populate material list don't mutate the state,once subitted, clear the state   */}
