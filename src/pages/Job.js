@@ -137,103 +137,117 @@ const Job = function () {
   return cameraIsOpen ? (
     <WebcamCapture setCameraIsOpen={setCameraIsOpen} handleCapture={handleCapture} />
   ) : (
-    <div className="Job">
-      <FaArrowCircleLeft onClick={() => navigate('/jobs')} className="back-arrow" />
-      <textarea
-        className="Job__text-area title"
-        value={title}
-        onChange={(e) => handleTextChange(e, setTitle)}
-        onBlur={updateJob}
-        ref={titleRef}
-      >
-        {title}
-      </textarea>
-      <div className="Job__address-container">
-        <p className="Job__address__hint">Address:</p>
-        <input
-          className="Job__address__input address"
-          type="text"
-          value={firstAddressLine}
-          onChange={(e) => handleTextChange(e, setfirstAddressLine)}
-          onBlur={updateJob}
-        />
-        <input
-          className="Job__address__input"
-          type="text"
-          value={secondAddressLine}
-          onChange={(e) => handleTextChange(e, setSecondAddressLine)}
-          onBlur={updateJob}
-        />
-        <input
-          className="Job__address__input"
-          type="text"
-          value={thirdAddressLine}
-          onChange={(e) => handleTextChange(e, setThirdAddressLine)}
-          onBlur={updateJob}
-        />
-        <label>
-          Postcode:
-          <input
-            className="Job__address__input__postcode"
-            type="text"
-            value={postcode}
-            onChange={(e) => handleTextChange(e, setPostcode)}
+    <>
+      {' '}
+      <div className="job-page__container">
+        <div className="Job">
+          <FaArrowCircleLeft onClick={() => navigate('/jobs')} className="back-arrow" />
+          <textarea
+            className="Job__text-area title"
+            value={title}
+            onChange={(e) => handleTextChange(e, setTitle)}
             onBlur={updateJob}
-          />
-        </label>
-      </div>
+            ref={titleRef}
+          >
+            {title}
+          </textarea>
+          <div className="Job__address-container">
+            <p className="Job__address__hint">Address:</p>
+            <input
+              className="Job__address__input address"
+              type="text"
+              value={firstAddressLine}
+              onChange={(e) => handleTextChange(e, setfirstAddressLine)}
+              onBlur={updateJob}
+            />
+            <input
+              className="Job__address__input"
+              type="text"
+              value={secondAddressLine}
+              onChange={(e) => handleTextChange(e, setSecondAddressLine)}
+              onBlur={updateJob}
+            />
+            <input
+              className="Job__address__input"
+              type="text"
+              value={thirdAddressLine}
+              onChange={(e) => handleTextChange(e, setThirdAddressLine)}
+              onBlur={updateJob}
+            />
+            <label>
+              Postcode:
+              <input
+                className="Job__address__input__postcode"
+                type="text"
+                value={postcode}
+                onChange={(e) => handleTextChange(e, setPostcode)}
+                onBlur={updateJob}
+              />
+            </label>
+          </div>
 
-      {datePickerIsOpen ? (
-        <DatePicker
-          startDate={startDate}
-          endDate={endDate}
-          handleDateSelection={handleDateSelection}
-          setDatePickerIsOpen={setDatePickerIsOpen}
-        />
-      ) : (
-        <div className="Job__calendar-row">
-          <p className="Job__calendar-dates">{`${startDate} - ${endDate}`}</p>
-          <FaCalendarAlt className="Job__calendar-icon" onClick={() => setDatePickerIsOpen(true)} />
-        </div>
-      )}
+          {datePickerIsOpen ? (
+            <DatePicker
+              startDate={startDate}
+              endDate={endDate}
+              handleDateSelection={handleDateSelection}
+              setDatePickerIsOpen={setDatePickerIsOpen}
+            />
+          ) : (
+            <div className="Job__calendar-row">
+              <p className="Job__calendar-dates">{`${startDate} - ${endDate}`}</p>
+              <FaCalendarAlt
+                className="Job__calendar-icon"
+                onClick={() => setDatePickerIsOpen(true)}
+              />
+            </div>
+          )}
 
-      <div>
-        <textarea
-          placeholder="Notes about the job"
-          className="Job__text-area__notes"
-          value={notes}
-          onChange={(e) => handleTextChange(e, setNotes)}
-          onBlur={updateJob}
-          ref={notesRef}
-        >
-          {notes}
-        </textarea>
-      </div>
+          <div>
+            <textarea
+              placeholder="Notes about the job"
+              className="Job__text-area__notes"
+              value={notes}
+              onChange={(e) => handleTextChange(e, setNotes)}
+              onBlur={updateJob}
+              ref={notesRef}
+            >
+              {notes}
+            </textarea>
+          </div>
 
-      <MaterialsList jobId={jobId} />
-      <div className="Job__attachment-buttons__row">
-        <div className="Job__attachment-icons__container">
-          <FaCamera className="Job__attachment-icons" onClick={() => setCameraIsOpen(true)} />
-        </div>
-        <div className="Job__attachment-icons__container">
-          <label htmlFor="file-upload">
-            <input name="file-upload" type="file" id="file-upload" onChange={handleFile} hidden />
-            <FaImage className="Job__attachment-icons" />
-          </label>
+          <MaterialsList jobId={jobId} />
+          <div className="Job__attachment-buttons__row">
+            <div className="Job__attachment-icons__container">
+              <FaCamera className="Job__attachment-icons" onClick={() => setCameraIsOpen(true)} />
+            </div>
+            <div className="Job__attachment-icons__container">
+              <label htmlFor="file-upload">
+                <input
+                  name="file-upload"
+                  type="file"
+                  id="file-upload"
+                  onChange={handleFile}
+                  hidden
+                />
+                <FaImage className="Job__attachment-icons" />
+              </label>
+            </div>
+          </div>
+          <ul className="Job__attachments">
+            {attachments.map((attachment, index) => (
+              <Attachment
+                key={attachment.id}
+                attachment={attachment}
+                deleteAttachment={deleteAttachment}
+                index={index}
+              />
+            ))}
+          </ul>
         </div>
       </div>
-      <ul className="Job__attachments">
-        {attachments.map((attachment, index) => (
-          <Attachment
-            key={attachment.id}
-            attachment={attachment}
-            deleteAttachment={deleteAttachment}
-            index={index}
-          />
-        ))}
-      </ul>
       <Footer onJobPage={true} />
-    </div>
+    </>
   );
 };
 
