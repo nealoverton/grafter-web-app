@@ -3,7 +3,8 @@
 }
 
 .container {
-  height: 100vh;
+  height: 50vh;
+
   background-color: #83a4d4; /* fallback for old browsers */
   background-color: -webkit-linear-gradient(
     to right,
