@@ -60,7 +60,7 @@ const Job = function () {
     setTimeout(imageTimout, 2000);
   }, [loading]);
 
-  const updateJob = () => {
+  const updateJob = (data) => {
     const tempJob = {};
     tempJob.name = title;
     tempJob.firstAddressLine = firstAddressLine;
@@ -68,10 +68,8 @@ const Job = function () {
     tempJob.thirdAddressLine = thirdAddressLine;
     tempJob.postcode = postcode;
     tempJob.jobNotes = notes;
-    tempJob.startDate = startDate;
-    tempJob.endDate = endDate;
-
-    console.log(tempJob);
+    tempJob.startDate = data.startDate || startDate;
+    tempJob.endDate = data.endDate || endDate;
 
     databaseService.updateJob(jobId, tempJob);
   };
@@ -80,8 +78,8 @@ const Job = function () {
     console.log(`new dates: ${dates[0]} - ${dates[1]}`);
     setStartDate(dates[0]);
     setEndDate(dates[1]);
-
-    setTimeout(updateJob, 10000);
+    const newData = { startDate: dates[0], endDate: dates[1] };
+    updateJob(newData);
   };
 
   const handleTextChange = (event, func) => {

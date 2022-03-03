@@ -9,7 +9,7 @@ const Home = function () {
   return (
     <>
       {' '}
-      <div className="container">
+      <div className="Home__container">
         {error && <h1>{error}</h1>}
         <div className="homePage__buttons-container">
           <Link to="/jobs">

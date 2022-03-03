@@ -17,6 +17,7 @@
   background-color: var(--color-primary-blue-dark);
   display: flex;
   flex-direction: column;
+  max-height: 321px;
 }
 
 .DatePicker__header {
