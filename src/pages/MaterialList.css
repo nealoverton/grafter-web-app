@@ -1,7 +1,3 @@
-/* * {
-  border: solid 1px red;
-} */
-
 ul {
   list-style: none;
 }
@@ -106,7 +102,7 @@ td {
 }
 
 td {
-  padding-left: 6%;
+  text-align: center;
 }
 
 table {
