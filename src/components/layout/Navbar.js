@@ -13,7 +13,7 @@ const Nav = function () {
 
   const handleLogout = async () => {
     setError('');
-
+    setDropdownOpen(false);
     try {
       await logout();
       navigate('/login');
@@ -34,7 +34,7 @@ const Nav = function () {
       <div className={dropdownOpen ? 'Nav__dropdown' : 'Nav__dropdown hidden'}>
         <p className="Nav__dropdown__email">{currentUser.email}</p>
 
-        <Link to="/user" className="Nav__dropdown__account">
+        <Link to="/user" className="Nav__dropdown__account" onClick={() => setDropdownOpen(false)}>
           {' '}
           My Account{' '}
         </Link>

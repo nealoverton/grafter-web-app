@@ -21,8 +21,6 @@ const DatePicker = function ({
   ]);
 
   const handleChange = (dates) => {
-    console.log(dates);
-    console.log(dates[0].toLocaleDateString());
     setValue(dates);
     handleDateSelection([
       dates[0].toLocaleDateString('en-GB'),
