@@ -87,6 +87,19 @@
   margin: 10px;
 }
 
+.Job__text-area__container {
+  border: 3px solid var(--color-primary-blue-dark);
+  border-radius: 5px;
+}
+
+.Job__text-area__notes {
+  border: 3px solid var(--color-primary-blue-dark);
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 10px;
+  width: 80vw;
+}
+
 .title {
   font-size: 25px;
   font-weight: bold;

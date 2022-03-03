@@ -25,7 +25,7 @@ const Job = function () {
 
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
   const [cameraIsOpen, setCameraIsOpen] = useState(false);
-  const [loadingImages, setLoadingImages] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     window.scrollTo(0, 0);
@@ -53,14 +53,14 @@ const Job = function () {
           setAttachments(dbJobImages);
         })
         .then(() => {
-          setLoadingImages(false);
+          setLoading(false);
         });
     };
     // to account for time needed for image to be uploaded to cloud
     setTimeout(imageTimout, 2000);
-  }, [loadingImages]);
+  }, [loading]);
 
-  const updateJob = (data) => {
+  const updateJob = () => {
     const tempJob = {};
     tempJob.name = title;
     tempJob.firstAddressLine = firstAddressLine;
@@ -68,8 +68,8 @@ const Job = function () {
     tempJob.thirdAddressLine = thirdAddressLine;
     tempJob.postcode = postcode;
     tempJob.jobNotes = notes;
-    tempJob.startDate = data.startDate || startDate;
-    tempJob.endDate = data.endDate || endDate;
+    tempJob.startDate = startDate;
+    tempJob.endDate = endDate;
 
     console.log(tempJob);
 
@@ -80,12 +80,8 @@ const Job = function () {
     console.log(`new dates: ${dates[0]} - ${dates[1]}`);
     setStartDate(dates[0]);
     setEndDate(dates[1]);
-    const newData = {
-      startDate: dates[0],
-      endDate: dates[1]
-    };
 
-    updateJob(newData);
+    setTimeout(updateJob, 10000);
   };
 
   const handleTextChange = (event, func) => {
@@ -103,7 +99,7 @@ const Job = function () {
       const dbJobImages = await databaseService.getImages(jobId);
 
       await setAttachments(dbJobImages);
-      setLoadingImages(true);
+      setLoading(true);
     } catch (err) {
       console.log(err);
     }
@@ -115,7 +111,7 @@ const Job = function () {
       const dbJobImages = await databaseService.getImages(jobId);
 
       await setAttachments(dbJobImages);
-      setLoadingImages(true);
+      setLoading(true);
     } catch (err) {
       console.log(err);
     }
@@ -189,14 +185,18 @@ const Job = function () {
         </div>
       )}
 
-      <textarea
-        className="Job__text-area"
-        value={notes}
-        onChange={(e) => handleTextChange(e, setNotes)}
-        onBlur={updateJob}
-      >
-        {notes}
-      </textarea>
+      <div>
+        <textarea
+          placeholder="Notes about the job"
+          className="Job__text-area__notes"
+          value={notes}
+          onChange={(e) => handleTextChange(e, setNotes)}
+          onBlur={updateJob}
+        >
+          {notes}
+        </textarea>
+      </div>
+
       <MaterialsList jobId={jobId} />
       <div className="Job__attachment-buttons__row">
         <div className="Job__attachment-icons__container">
