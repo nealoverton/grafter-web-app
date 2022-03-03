@@ -19,15 +19,13 @@ export const WebcamCapture = function ({ handleCapture, setCameraIsOpen }) {
     setImage(imageSrc);
   }, [webcamRef]);
 
-  const handleImageChoice = (isSaved = false) => {
-    if (isSaved) {
-      fetch(image)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const file = new File([blob], uuid(), { type: 'image/png' });
-          handleCapture(file);
-        });
-    }
+  const handleImageChoice = () => {
+    fetch(image)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const file = new File([blob], uuid(), { type: 'image/png' });
+        handleCapture(file);
+      });
 
     setImage(null);
   };
@@ -36,7 +34,7 @@ export const WebcamCapture = function ({ handleCapture, setCameraIsOpen }) {
     <div className="Webcam__container">
       <img src={image} alt="captured snap" className="Webcam__centered-image" />
       <div className="Webcam__save-photo">
-        <FaTimesCircle className="Webcam__save-photo__icon" onClick={handleImageChoice} />
+        <FaTimesCircle className="Webcam__save-photo__icon" onClick={() => setImage(null)} />
         <h2 className="Webcam__save-photo__text">Attach photo?</h2>
         <FaCheckCircle className="Webcam__save-photo__icon" onClick={handleImageChoice} />
       </div>
