@@ -17,15 +17,30 @@
   border-radius: 10vw;
 }
 
+.jobs-list__background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #83a4d4; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #b6fbff,
+    #83a4d4
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
 .jobs-list {
   display: flex;
   flex-direction: column;
   justify-content: start;
   background: #ffffff;
   text-align: center;
+  margin: 2rem;
   border-radius: 10px;
   padding-bottom: 32px;
   min-height: 80vh;
+  padding: 1rem;
 }
 
 h1 {

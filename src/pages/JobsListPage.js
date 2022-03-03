@@ -59,16 +59,18 @@ function JobsList() {
   return (
     <>
       {' '}
-      <div className="jobs-list">
-        <FaArrowCircleLeft onClick={() => navigate('/')} className="back-arrow" />
-        <h1>Live Jobs</h1>
-        <JobForm onSubmit={addJob} />
-        <JobPage
-          jobs={jobs}
-          completeJob={completeJob}
-          removeJob={removeJob}
-          updateJob={updateJob}
-        />
+      <div className="jobs-list__background">
+        <div className="jobs-list">
+          <FaArrowCircleLeft onClick={() => navigate('/')} className="back-arrow" />
+          <h1>Live Jobs</h1>
+          <JobForm onSubmit={addJob} />
+          <JobPage
+            jobs={jobs}
+            completeJob={completeJob}
+            removeJob={removeJob}
+            updateJob={updateJob}
+          />
+        </div>
       </div>
       <Footer />
     </>
