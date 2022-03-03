@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaTimesCircle } from 'react-icons/fa';
 import './Attachment.css';
 
-export const Attachment = function ({ attachment, deleteAttachment, index }) {
+const Attachment = function ({ attachment, deleteAttachment, index }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   return (

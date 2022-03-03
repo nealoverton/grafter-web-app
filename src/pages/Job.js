@@ -5,21 +5,25 @@ import MaterialsList from './MaterialsList';
 import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
 import databaseService from '../services/firestore';
-import { Attachment } from './Attachment';
+import Attachment from './Attachment';
+import DatePicker from '../components/forms/Datepicker';
 import Footer from '../components/layout/Footer';
 
 const Job = function () {
   const { jobId } = useParams();
 
-  const [job, setJob] = useState({});
+  // const [job, setJob] = useState({});
   const [title, setTitle] = useState('');
   const [notes, setNotes] = useState('');
   const [firstAddressLine, setfirstAddressLine] = useState('');
   const [secondAddressLine, setSecondAddressLine] = useState('');
   const [thirdAddressLine, setThirdAddressLine] = useState('');
   const [postcode, setPostcode] = useState('');
+  const [startDate, setStartDate] = useState('Pick start date');
+  const [endDate, setEndDate] = useState('Pick end date');
   const [attachments, setAttachments] = useState([]);
 
+  const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
   const [cameraIsOpen, setCameraIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -27,13 +31,15 @@ const Job = function () {
     window.scrollTo(0, 0);
     const dbJob = await databaseService.getJob(jobId);
 
-    setJob(dbJob);
+    // setJob(dbJob);
     setTitle(dbJob.name);
     setNotes(dbJob.jobNotes);
     setfirstAddressLine(dbJob.firstAddressLine);
     setSecondAddressLine(dbJob.secondAddressLine);
     setThirdAddressLine(dbJob.thirdAddressLine);
     setPostcode(dbJob.postcode);
+    if (dbJob.startDate) setStartDate(dbJob.startDate);
+    if (dbJob.endDate) setEndDate(dbJob.endDate);
 
     const dbJobImages = await databaseService.getImages(jobId);
     setAttachments(dbJobImages);
@@ -54,7 +60,31 @@ const Job = function () {
     setTimeout(imageTimout, 2000);
   }, [loading]);
 
-  const handleChange = (event, func) => {
+  const updateJob = () => {
+    const tempJob = {};
+    tempJob.name = title;
+    tempJob.firstAddressLine = firstAddressLine;
+    tempJob.secondAddressLine = secondAddressLine;
+    tempJob.thirdAddressLine = thirdAddressLine;
+    tempJob.postcode = postcode;
+    tempJob.jobNotes = notes;
+    tempJob.startDate = startDate;
+    tempJob.endDate = endDate;
+
+    console.log(tempJob);
+
+    databaseService.updateJob(jobId, tempJob);
+  };
+
+  const handleDateSelection = (dates) => {
+    console.log(`new dates: ${dates[0]} - ${dates[1]}`);
+    setStartDate(dates[0]);
+    setEndDate(dates[1]);
+
+    setTimeout(updateJob, 10000);
+  };
+
+  const handleTextChange = (event, func) => {
     event.target.style.height = 'inherit';
     event.target.style.height = `${event.target.scrollHeight}px`;
     func(event.target.value);
@@ -70,7 +100,6 @@ const Job = function () {
 
       await setAttachments(dbJobImages);
       setLoading(true);
-      console.log(attachments);
     } catch (err) {
       console.log(err);
     }
@@ -95,18 +124,6 @@ const Job = function () {
     setAttachments(newAttachments);
   };
 
-  const updateJob = () => {
-    const tempJob = job;
-    tempJob.name = title;
-    tempJob.firstAddressLine = firstAddressLine;
-    tempJob.secondAddressLine = secondAddressLine;
-    tempJob.thirdAddressLine = thirdAddressLine;
-    tempJob.postcode = postcode;
-    tempJob.jobNotes = notes;
-
-    databaseService.updateJob(jobId, tempJob);
-  };
-
   return cameraIsOpen ? (
     <WebcamCapture setCameraIsOpen={setCameraIsOpen} handleCapture={handleCapture} />
   ) : (
@@ -114,10 +131,10 @@ const Job = function () {
       <textarea
         className="Job__text-area title"
         value={title}
-        onChange={(e) => handleChange(e, setTitle)}
+        onChange={(e) => handleTextChange(e, setTitle)}
         onBlur={updateJob}
       >
-        {job.title}
+        {title}
       </textarea>
       <div className="Job__address-container">
         <p className="Job__address__hint">Address:</p>
@@ -125,21 +142,21 @@ const Job = function () {
           className="Job__address__input address"
           type="text"
           value={firstAddressLine}
-          onChange={(e) => handleChange(e, setfirstAddressLine)}
+          onChange={(e) => handleTextChange(e, setfirstAddressLine)}
           onBlur={updateJob}
         />
         <input
           className="Job__address__input"
           type="text"
           value={secondAddressLine}
-          onChange={(e) => handleChange(e, setSecondAddressLine)}
+          onChange={(e) => handleTextChange(e, setSecondAddressLine)}
           onBlur={updateJob}
         />
         <input
           className="Job__address__input"
           type="text"
           value={thirdAddressLine}
-          onChange={(e) => handleChange(e, setThirdAddressLine)}
+          onChange={(e) => handleTextChange(e, setThirdAddressLine)}
           onBlur={updateJob}
         />
         <label>
@@ -148,26 +165,33 @@ const Job = function () {
             className="Job__address__input__postcode"
             type="text"
             value={postcode}
-            onChange={(e) => handleChange(e, setPostcode)}
+            onChange={(e) => handleTextChange(e, setPostcode)}
             onBlur={updateJob}
           />
         </label>
       </div>
-      <div className="Job__calendar-row">
-        <p className="dates">
-          <FaCalendarAlt />
-          {`${job.startDate ? job.startDate : 'Pick a start date'} - ${
-            job.endDate ? job.endDate : 'Pick an end date'
-          }`}
-        </p>
-      </div>
+
+      {datePickerIsOpen ? (
+        <DatePicker
+          startDate={startDate}
+          endDate={endDate}
+          handleDateSelection={handleDateSelection}
+          setDatePickerIsOpen={setDatePickerIsOpen}
+        />
+      ) : (
+        <div className="Job__calendar-row">
+          <p className="Job__calendar-dates">{`${startDate} - ${endDate}`}</p>
+          <FaCalendarAlt className="Job__calendar-icon" onClick={() => setDatePickerIsOpen(true)} />
+        </div>
+      )}
+
       <textarea
         className="Job__text-area"
         value={notes}
-        onChange={(e) => handleChange(e, setNotes)}
+        onChange={(e) => handleTextChange(e, setNotes)}
         onBlur={updateJob}
       >
-        {job.notes}
+        {notes}
       </textarea>
       <MaterialsList jobId={jobId} />
       <div className="Job__attachment-buttons__row">
