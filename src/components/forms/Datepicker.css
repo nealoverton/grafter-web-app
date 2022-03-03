@@ -1,0 +1,27 @@
+.DatePicker__header__close-icon {
+  width: 50px;
+  height: 50px;
+  color: white;
+  margin: 5px;
+}
+
+.DatePicker__header__text {
+  width: 80%;
+  font-size: 15px;
+  text-align: center;
+}
+
+.DatePicker__container {
+  border: 3px solid var(--color-primary-blue-dark);
+  border-radius: 5px;
+  background-color: var(--color-primary-blue-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+.DatePicker__header {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

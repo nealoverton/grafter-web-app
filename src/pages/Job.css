@@ -149,7 +149,7 @@ input[type='text'] {
 
 .Job__address__input {
   all: unset;
-  margin: 10px;
+  margin: 2px;
   width: 90%;
   background-color: azure;
   text-align: center;
