@@ -18,8 +18,7 @@
   text-align: left;
   background-color: var(--color-primary-blue-dark);
   color: var(--color-grey-light-1);
-  position: absolute;
-  bottom: -115vh;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
