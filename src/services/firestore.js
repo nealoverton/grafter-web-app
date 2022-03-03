@@ -95,7 +95,6 @@ const getJob = async (jobId) => {
 const updateJob = async (jobId, data) => {
   // function expects data argument to be an object
   const jobRef = getJobRef(jobId);
-
   return await updateDoc(jobRef, data);
 };
 

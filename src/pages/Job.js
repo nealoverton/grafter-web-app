@@ -25,7 +25,7 @@ const Job = function () {
 
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
   const [cameraIsOpen, setCameraIsOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loadingImages, setLoadingImages] = useState(true);
 
   useEffect(async () => {
     window.scrollTo(0, 0);
@@ -53,14 +53,14 @@ const Job = function () {
           setAttachments(dbJobImages);
         })
         .then(() => {
-          setLoading(false);
+          setLoadingImages(false);
         });
     };
     // to account for time needed for image to be uploaded to cloud
     setTimeout(imageTimout, 2000);
-  }, [loading]);
+  }, [loadingImages]);
 
-  const updateJob = () => {
+  const updateJob = (data) => {
     const tempJob = {};
     tempJob.name = title;
     tempJob.firstAddressLine = firstAddressLine;
@@ -68,8 +68,8 @@ const Job = function () {
     tempJob.thirdAddressLine = thirdAddressLine;
     tempJob.postcode = postcode;
     tempJob.jobNotes = notes;
-    tempJob.startDate = startDate;
-    tempJob.endDate = endDate;
+    tempJob.startDate = data.startDate || startDate;
+    tempJob.endDate = data.endDate || endDate;
 
     console.log(tempJob);
 
@@ -80,8 +80,12 @@ const Job = function () {
     console.log(`new dates: ${dates[0]} - ${dates[1]}`);
     setStartDate(dates[0]);
     setEndDate(dates[1]);
+    const newData = {
+      startDate: dates[0],
+      endDate: dates[1]
+    };
 
-    setTimeout(updateJob, 10000);
+    updateJob(newData);
   };
 
   const handleTextChange = (event, func) => {
@@ -99,7 +103,7 @@ const Job = function () {
       const dbJobImages = await databaseService.getImages(jobId);
 
       await setAttachments(dbJobImages);
-      setLoading(true);
+      setLoadingImages(true);
     } catch (err) {
       console.log(err);
     }
@@ -111,7 +115,7 @@ const Job = function () {
       const dbJobImages = await databaseService.getImages(jobId);
 
       await setAttachments(dbJobImages);
-      setLoading(true);
+      setLoadingImages(true);
     } catch (err) {
       console.log(err);
     }
