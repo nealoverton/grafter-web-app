@@ -17,11 +17,7 @@ const Home = function () {
               Jobs
             </button>
           </Link>
-          <Link to="/">
-            <button type="button" className="homePage__buttons">
-              Sketch
-            </button>
-          </Link>
+
           <Link to="/calendar">
             <button type="button" className="homePage__buttons">
               Calendar
