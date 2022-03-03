@@ -31,7 +31,7 @@ const Footer = function (props) {
         Project by:
         <div className="footer__creators-container">
           <div>Jimmy Hockless</div>
-          <div>Jordon Richmond</div>
+          <div>Jordan Richmond</div>
           <div>Neal Overton</div>
         </div>
         <div className="footer__creators-container">
