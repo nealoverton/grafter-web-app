@@ -14,19 +14,18 @@ export const reactCalendar = function () {
         const dates = originalDate.split('/');
         return [dates[2], dates[1], dates[0]].join('-');
       };
-      console.log(jobsFromFirestore);
-      jobsFromFirestore['0'].jobStartDate = dateHelper(jobsFromFirestore['0'].jobStartDate);
-      jobsFromFirestore['0'].jobEndDate = dateHelper(jobsFromFirestore['0'].jobEndDate);
-      if (jobsFromFirestore.length > 0) {
-        const newJob = [
-          {
-            title: `${jobsFromFirestore['0'].name}`,
-            start: jobsFromFirestore['0'].jobStartDate,
-            end: jobsFromFirestore['0'].jobEndDate
-          }
-        ];
-        setJob(newJob);
-      }
+      const newJobs = [];
+      jobsFromFirestore.forEach((jobData) => {
+        jobData.jobStartDate = dateHelper(jobData.jobStartDate);
+        jobData.jobEndDate = dateHelper(jobData.jobEndDate);
+        const newJob = {
+          title: `${jobData.name}`,
+          start: jobData.jobStartDate,
+          end: jobData.jobEndDate
+        };
+        newJobs.push(newJob);
+      });
+      setJob(newJobs);
     });
   }, []);
 
