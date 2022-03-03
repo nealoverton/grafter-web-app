@@ -80,7 +80,10 @@
 
 .Job__text-area {
   all: unset;
+  resize: vertical;
   word-break: break-word;
+  white-space: pre-wrap;
+  overflow: hidden;
   width: 80vw;
   text-align: center;
   height: 2em;
@@ -223,6 +226,8 @@ input[type='text'] {
   z-index: 2;
   width: 15vw;
   height: 15vw;
+  max-width: 70px;
+  max-height: 70px;
   align-self: flex-start;
   color: var(--color-primary-blue-dark);
   border: 2px solid white;

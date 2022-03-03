@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaCalendarAlt, FaCamera, FaImage, FaArrowCircleLeft } from 'react-icons/fa';
 import MaterialsList from './MaterialsList';
@@ -28,8 +28,17 @@ const Job = function () {
   const [cameraIsOpen, setCameraIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const titleRef = useRef(null);
+  const notesRef = useRef(null);
+
   useEffect(async () => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
+
+    notesRef.current.style.height = 'inherit';
+    notesRef.current.style.height = `${notesRef.current.scrollHeight + 10}px`;
+
+    console.log(notesRef.current.scrollHeight);
+
     const dbJob = await databaseService.getJob(jobId);
 
     // setJob(dbJob);
@@ -76,7 +85,6 @@ const Job = function () {
   };
 
   const handleDateSelection = (dates) => {
-    console.log(`new dates: ${dates[0]} - ${dates[1]}`);
     setStartDate(dates[0]);
     setEndDate(dates[1]);
     const newData = { startDate: dates[0], endDate: dates[1] };
@@ -85,7 +93,10 @@ const Job = function () {
 
   const handleTextChange = (event, func) => {
     event.target.style.height = 'inherit';
-    event.target.style.height = `${event.target.scrollHeight}px`;
+    event.target.style.height = `${event.target.scrollHeight + 10}px`;
+
+    console.log(notesRef.current.style.height);
+
     func(event.target.value);
   };
 
@@ -133,6 +144,7 @@ const Job = function () {
         value={title}
         onChange={(e) => handleTextChange(e, setTitle)}
         onBlur={updateJob}
+        ref={titleRef}
       >
         {title}
       </textarea>
@@ -192,6 +204,7 @@ const Job = function () {
           value={notes}
           onChange={(e) => handleTextChange(e, setNotes)}
           onBlur={updateJob}
+          ref={notesRef}
         >
           {notes}
         </textarea>

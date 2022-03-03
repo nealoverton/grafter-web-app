@@ -1,6 +1,4 @@
 const ReadOnlyRow = function ({ item, handleEditClick, handleDeleteClick }) {
-  console.log(item, 'read only');
-  console.log(item.id, '<<<read only id');
   return (
     <tr>
       <td>{item.materialName}</td>
