@@ -5,13 +5,9 @@ import MaterialsList from './MaterialsList';
 import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
 import databaseService from '../services/firestore';
-<<<<<<< HEAD
 import Attachment from './Attachment';
 import DatePicker from '../components/forms/Datepicker';
-=======
-import { Attachment } from './Attachment';
 import Footer from '../components/layout/Footer';
->>>>>>> 02e834dd5dbe60feba0e4f31d751e08ee8e8e940
 
 const Job = function () {
   const { jobId } = useParams();
@@ -23,8 +19,8 @@ const Job = function () {
   const [secondAddressLine, setSecondAddressLine] = useState('');
   const [thirdAddressLine, setThirdAddressLine] = useState('');
   const [postcode, setPostcode] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState('Pick start date');
+  const [endDate, setEndDate] = useState('Pick end date');
   const [attachments, setAttachments] = useState([]);
 
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
@@ -42,8 +38,8 @@ const Job = function () {
     setSecondAddressLine(dbJob.secondAddressLine);
     setThirdAddressLine(dbJob.thirdAddressLine);
     setPostcode(dbJob.postcode);
-    setStartDate(dbJob.startDate);
-    setEndDate(dbJob.endDate);
+    if (dbJob.startDate) setStartDate(dbJob.startDate);
+    if (dbJob.endDate) setEndDate(dbJob.endDate);
 
     const dbJobImages = await databaseService.getImages(jobId);
     setAttachments(dbJobImages);
@@ -80,12 +76,12 @@ const Job = function () {
     databaseService.updateJob(jobId, tempJob);
   };
 
-  const handleDateSelection = async (dates) => {
-    console.log(`new dates: ${startDate} - ${endDate}`);
-    await setStartDate(dates[0]);
-    await setEndDate(dates[1]);
+  const handleDateSelection = (dates) => {
+    console.log(`new dates: ${dates[0]} - ${dates[1]}`);
+    setStartDate(dates[0]);
+    setEndDate(dates[1]);
 
-    setTimeout(updateJob, 2000);
+    setTimeout(updateJob, 10000);
   };
 
   const handleTextChange = (event, func) => {
@@ -174,7 +170,6 @@ const Job = function () {
           />
         </label>
       </div>
-<<<<<<< HEAD
 
       {datePickerIsOpen ? (
         <DatePicker
@@ -185,23 +180,11 @@ const Job = function () {
         />
       ) : (
         <div className="Job__calendar-row">
-          <p className="dates">
-            <FaCalendarAlt onClick={() => setDatePickerIsOpen(true)} />
-            {`${startDate} - ${endDate}`}
-          </p>
+          <p className="Job__calendar-dates">{`${startDate} - ${endDate}`}</p>
+          <FaCalendarAlt className="Job__calendar-icon" onClick={() => setDatePickerIsOpen(true)} />
         </div>
       )}
 
-=======
-      <div className="Job__calendar-row">
-        <p className="dates">
-          <FaCalendarAlt />
-          {`${job.startDate ? job.startDate : 'Pick a start date'} - ${
-            job.endDate ? job.endDate : 'Pick an end date'
-          }`}
-        </p>
-      </div>
->>>>>>> 02e834dd5dbe60feba0e4f31d751e08ee8e8e940
       <textarea
         className="Job__text-area"
         value={notes}

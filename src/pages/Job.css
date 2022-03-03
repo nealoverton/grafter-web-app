@@ -59,10 +59,24 @@
 }
 
 .Job__calendar-row {
+  background-color: var(--color-primary-blue-dark);
   display: flex;
-  min-width: 50vw;
-  justify-content: center;
+  min-width: 60vw;
+  height: 4em;
+  border-radius: 5px;
+  justify-content: space-around;
   align-items: center;
+}
+
+.Job__calendar-dates {
+  font-size: 15px;
+  color: white;
+}
+
+.Job__calendar-icon {
+  width: 20px;
+  height: 20px;
+  color: white;
 }
 
 .Job__text-area {
