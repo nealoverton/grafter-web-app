@@ -19,8 +19,8 @@ const Job = function () {
   const [secondAddressLine, setSecondAddressLine] = useState('');
   const [thirdAddressLine, setThirdAddressLine] = useState('');
   const [postcode, setPostcode] = useState('');
-  const [startDate, setStartDate] = useState('Pick start date');
-  const [endDate, setEndDate] = useState('Pick end date');
+  const [startDate, setStartDate] = useState('Pick start ');
+  const [endDate, setEndDate] = useState(' end dates');
   const [attachments, setAttachments] = useState([]);
 
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
