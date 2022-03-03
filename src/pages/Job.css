@@ -218,3 +218,14 @@ input[type='text'] {
   background-color: var(--color-primary-blue-dark);
   color: var(--color-grey-light-1);
 }
+
+.back-arrow {
+  z-index: 2;
+  width: 15vw;
+  height: 15vw;
+  align-self: flex-start;
+  color: var(--color-primary-blue-dark);
+  border: 2px solid white;
+  background-color: white;
+  border-radius: 10vw;
+}

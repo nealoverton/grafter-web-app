@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { FaCalendarAlt, FaCamera, FaImage } from 'react-icons/fa';
+import { useParams, useNavigate } from 'react-router-dom';
+import { FaCalendarAlt, FaCamera, FaImage, FaArrowCircleLeft } from 'react-icons/fa';
 import MaterialsList from './MaterialsList';
 import { WebcamCapture } from '../components/media/WebcamCapture';
 import './Job.css';
@@ -11,6 +11,7 @@ import Footer from '../components/layout/Footer';
 
 const Job = function () {
   const { jobId } = useParams();
+  const navigate = useNavigate();
 
   // const [job, setJob] = useState({});
   const [title, setTitle] = useState('');
@@ -38,8 +39,8 @@ const Job = function () {
     setSecondAddressLine(dbJob.secondAddressLine);
     setThirdAddressLine(dbJob.thirdAddressLine);
     setPostcode(dbJob.postcode);
-    if (dbJob.startDate) setStartDate(dbJob.startDate);
-    if (dbJob.endDate) setEndDate(dbJob.endDate);
+    if (dbJob.jobStartDate) setStartDate(dbJob.jobStartDate);
+    if (dbJob.jobEndDate) setEndDate(dbJob.jobEndDate);
 
     const dbJobImages = await databaseService.getImages(jobId);
     setAttachments(dbJobImages);
@@ -68,8 +69,8 @@ const Job = function () {
     tempJob.thirdAddressLine = thirdAddressLine;
     tempJob.postcode = postcode;
     tempJob.jobNotes = notes;
-    tempJob.startDate = data.startDate || startDate;
-    tempJob.endDate = data.endDate || endDate;
+    tempJob.jobStartDate = data.startDate || startDate;
+    tempJob.jobEndDate = data.endDate || endDate;
 
     databaseService.updateJob(jobId, tempJob);
   };
@@ -126,6 +127,7 @@ const Job = function () {
     <WebcamCapture setCameraIsOpen={setCameraIsOpen} handleCapture={handleCapture} />
   ) : (
     <div className="Job">
+      <FaArrowCircleLeft onClick={() => navigate('/jobs')} className="back-arrow" />
       <textarea
         className="Job__text-area title"
         value={title}

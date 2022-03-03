@@ -9,14 +9,21 @@ export const reactCalendar = function () {
   const [job, setJob] = useState([]);
 
   useEffect(() => {
-    databaseService.getJobs('EBRklWxRHARgMY3PADB7omUiLuC2').then((jobsFromFirestore) => {
-      console.log(jobsFromFirestore, '<<<<');
+    databaseService.getJobs().then((jobsFromFirestore) => {
       if (jobsFromFirestore.length > 0) {
         const newJob = [
           {
-            title: `${jobsFromFirestore['0'].name}`,
-            start: `${jobsFromFirestore['0'].jobStartDate}`,
-            end: `${jobsFromFirestore['0'].jobEndDate}`
+            title: `Bathroom`,
+            start: `2022-03-10`,
+            end: `2022-03-15`
+            // title: `${jobsFromFirestore['0'].name}`,
+            // start: `${jobsFromFirestore['0'].jobStartDate}`,
+            // end: `${jobsFromFirestore['0'].jobEndDate}`
+          },
+          {
+            title: 'Kitchen',
+            start: `2022-03-12`,
+            end: `2022-03-20`
           }
         ];
         setJob(newJob);

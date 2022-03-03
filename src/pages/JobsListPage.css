@@ -5,6 +5,17 @@
   font-family: 'Open sans', 'sans-serif';
 } */
 
+.back-arrow {
+  z-index: 2;
+  width: 15vw;
+  height: 15vw;
+
+  color: var(--color-primary-blue-dark);
+  border: 2px solid white;
+  background-color: white;
+  border-radius: 10vw;
+}
+
 .jobs-list {
   display: flex;
   flex-direction: column;
