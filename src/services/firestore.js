@@ -38,18 +38,18 @@ const updateUser = async (data) => {
 };
 
 const addJob = async (
-  name = 'testJob',
-  firstAddressLine = '123 fake street',
-  secondAddressLine = 'pretend boulevard',
+  name = '',
+  firstAddressLine = '',
+  secondAddressLine = '',
   thirdAddressLine = '',
-  city = 'test villes',
-  postcode = '352 posty',
+  city = '',
+  postcode = '',
   estimate = 0,
   jobStartDate = '',
   jobEndDate = '',
   isLive = true,
   isComplete = false,
-  jobNotes = 'blah'
+  jobNotes = ''
 ) => {
   // get current user file
   const userRef = collection(fireStoreDB, 'users', auth.currentUser.uid, 'jobs');
@@ -104,7 +104,7 @@ const deleteJob = async (jobId) => {
   return await deleteDoc(jobRef);
 };
 
-const addMaterial = async (jobId, materialName = 'some material', unit = 3, price = 3.5) => {
+const addMaterial = async (jobId, materialName = '', unit = 0, price = 0.0) => {
   // get current job file
   const jobRef = collection(fireStoreDB, 'users', auth.currentUser.uid, 'jobs', jobId, 'materials');
 

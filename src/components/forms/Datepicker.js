@@ -24,7 +24,10 @@ const DatePicker = function ({
     console.log(dates);
     console.log(dates[0].toLocaleDateString());
     setValue(dates);
-    handleDateSelection([dates[0].toLocaleDateString(), dates[1].toLocaleDateString()]);
+    handleDateSelection([
+      dates[0].toLocaleDateString('en-US'),
+      dates[1].toLocaleDateString('en-US')
+    ]);
   };
 
   return (

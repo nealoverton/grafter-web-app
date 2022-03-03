@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaArrowCircleLeft } from 'react-icons/fa';
 import JobForm from '../components/forms/JobForm';
 import Footer from '../components/layout/Footer';
 import databaseService from '../services/firestore';
 import JobPage from './JobPage';
+
 import './JobsListPage.css';
 
 function JobsList() {
   const [jobs, setJobs] = useState([]);
   const [loadingJobs, setLoadingJobs] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(async () => {
     const dbJobs = await databaseService.getJobs();
@@ -55,6 +60,7 @@ function JobsList() {
     <>
       {' '}
       <div className="jobs-list">
+        <FaArrowCircleLeft onClick={() => navigate('/')} className="back-arrow" />
         <h1>Live Jobs</h1>
         <JobForm onSubmit={addJob} />
         <JobPage
