@@ -22,6 +22,10 @@
   position: fixed;
   top: 10px;
   left: 10px;
+  color: var(--color-primary-blue-dark);
+  border: 2px solid white;
+  background-color: white;
+  border-radius: 10vw;
 }
 
 .Webcam__shutter-icon {
@@ -31,6 +35,10 @@
   position: fixed;
   bottom: 10vh;
   left: 40vw;
+  color: var(--color-primary-blue-dark);
+  border: 2px solid white;
+  background-color: white;
+  border-radius: 10vw;
 }
 
 .Webcam__save-photo {
@@ -48,9 +56,15 @@
 .Webcam__save-photo__icon {
   width: 20vw;
   height: 20vw;
+  color: var(--color-primary-blue-dark);
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 10vw;
 }
 
 .Webcam__save-photo__text {
   text-align: center;
   font-size: 25px;
+  color: var(--color-primary-blue-dark);
+  text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
 }
